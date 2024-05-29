@@ -9,7 +9,7 @@ module top(
 	output [7:0] VGA_G,
 	output [7:0] VGA_B,
 	output VGA_BLANK_N,
-	output VGA_SYNC_N,
+	output VGA_SYNC_N
 );
 
 wire [9:0] next_x;
@@ -50,29 +50,29 @@ vga vga(
     .next_y(next_y)
 );
 
-// sprite spriteObstacle(
-// 	.clk(CLOCK_50),
-// 	.reset(reset),
-// 	.x(next_x), 
-// 	.y(next_y), 
-// 	.vsync(VGA_VS),
-// 	.sprite_x(obstacle_x), 
-// 	.sprite_y(obstacle_y),
-// 	.color(obstacle_color),
-// 	.drawing(obstacle_drawing)
-// );
+ spriteObjeto3 spriteObjeto3(
+ 	.clk(CLOCK_50),
+ 	.reset(reset),
+ 	.x(next_x), 
+ 	.y(next_y), 
+ 	.vsync(VGA_VS),
+ 	.sprite_x(obstacle_x), 
+ 	.sprite_y(obstacle_y),
+ 	.color(obstacle_color),
+ 	.drawing(obstacle_drawing)
+ );
 
-// spritePlayer spritePlayer(
-// 	.clk(CLOCK_50),
-// 	.reset(reset),
-// 	.x(next_x), 
-// 	.y(next_y), 
-// 	.vsync(VGA_VS),
-// 	.sprite_x(player_x), 
-// 	.sprite_y(plater_y),
-// 	.color(player_color),
-// 	.drawing(player_drawing)
-// );
+ spriteNave spriteNave(
+ 	.clk(CLOCK_50),
+ 	.reset(reset),
+ 	.x(next_x), 
+ 	.y(next_y), 
+ 	.vsync(VGA_VS),
+ 	.sprite_x(player_x), 
+ 	.sprite_y(plater_y),
+ 	.color(player_color),
+ 	.drawing(player_drawing)
+ );
 
 wire [9:0] player_x, player_y;
 
@@ -85,6 +85,24 @@ controllerPlayer controllerPlayer(
   .player_y(player_y)
 );
 
+reg [7:0] red;
+reg [7:0] green;
+reg [7:0] blue;
+
+// Obstacle parameters
+parameter [9:0] obstacle_size_x = 32;
+parameter [9:0] obstacle_size_y = 32;
+parameter [9:0] obstacle_spawn_delay = 10000;
+
+wire obstacle_x;
+wire obstacle_y;
+reg [2:0] obstacle_step_x;
+reg [2:0] obstacle_step_y;
+reg [9:0] obstacle_starting_x;
+reg [9:0] obstacle_spawn_timer;
+reg [1:0] obstacle_trigger;
+reg game_over;
+
 controllerObstacle controllerObstacle(
   .CLOCK_50(CLOCK_50),
   .reset(reset),
@@ -93,23 +111,6 @@ controllerObstacle controllerObstacle(
   .obstacle_x(obstacle_x),
   .obstacle_y(obstacle_y)
 );
-
-reg [7:0] red;
-reg [7:0] green;
-reg [7:0] blue;
-
-// Obstacle parameters
-parameter [9:0] obstacle_size_x = 32;
-parameter [9:0] obstacle_size_y = 32;
-parameter [9:0] obstacle_spawn_delay;
-
-reg [9:0] obstacle_x;
-reg [9:0] obstacle_y;
-reg [2:0] obstacle_step_x;
-reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_starting_x;
-reg [9:0] obstacle_spawn_timer;
-reg game_over;
 
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
@@ -124,13 +125,12 @@ always @(posedge SLOW_CLK) begin
 	divider = 500000;
 
   end else begin	
-	if(start == 0) game_over = 0;
 
-    // Pong movement
+    // Game
 	if(~game_over) begin
 
 		// obstacle_starting_x = ($urandom % 607);
-        obstacle_starting_x = 100;
+       obstacle_starting_x = 100;
 	
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin

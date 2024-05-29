@@ -1,6 +1,6 @@
 module controllerPlayer(
   input CLOCK_50,
-  // Não botei reset
+  input reset,
   input left_button,
   input right_button,
   output reg [9:0] player_x,
