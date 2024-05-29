@@ -146,9 +146,9 @@ always @(posedge SLOW_CLK) begin
 end
 
 always @ (posedge CLOCK_50) begin
-	red = ((drawing && color) || (player_drawing && player_color)) ? 255 : 0;
-	blue = ((drawing && color) || (player_drawing && player_color)) ? 255 : 0;
-	green = ((drawing && color) || (player_drawing && player_color)) ? 255 : 0;
+	red = ((obstacle_drawing && obstacle_color) || (player_drawing && player_color)) ? 255 : 0;
+	blue = ((obstacle_drawing && obstacle_color) || (player_drawing && player_color)) ? 255 : 0;
+	green = ((obstacle_drawing && obstacle_color) || (player_drawing && player_color)) ? 255 : 0;
 end
 
 endmodule
