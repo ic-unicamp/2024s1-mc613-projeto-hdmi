@@ -2,9 +2,11 @@
 
 Grupo:
 
-- RA - Nome
-- RA - Nome
-- RA - Nome
+- 232475 - Guilherme Gelmi
+- 239060 - Lucca Chinelato
+- 239062 - Lucca Amodio
+- 247361 - Ricardo Santos Dias
+
 
 ## Descrição
 
