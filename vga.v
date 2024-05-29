@@ -57,7 +57,7 @@ assign VGA_G = ativo ? green : 8'b00000000;
 assign VGA_B = ativo ? blue : 8'b00000000;
 assign line = (x == 96+45);
 
-assign next_x = x - (96+45); // offset retirado em calibracao na tela
+assign next_x = x - (96+40); // offset retirado em calibracao na tela
 assign next_y = y - (2+33); // offset retirado em calibracao na tela
 
 endmodule

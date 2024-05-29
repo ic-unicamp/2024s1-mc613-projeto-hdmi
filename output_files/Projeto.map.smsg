@@ -1,0 +1,2 @@
+Info (10281): Verilog HDL Declaration information at SCCBGPT.v(4): object "start" differs only in case from object "START" in the same scope File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/SCCBGPT.v Line: 4
+Info (10281): Verilog HDL Declaration information at SCCBGPT.v(6): object "data" differs only in case from object "DATA" in the same scope File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/SCCBGPT.v Line: 6

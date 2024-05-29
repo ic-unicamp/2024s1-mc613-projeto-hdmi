@@ -1,0 +1,144 @@
+module SCCBGPT (
+    input wire clk,
+    input wire reset,
+    input wire start,
+    input wire [7:0] addr,
+    input wire [7:0] data,
+    output wire done,
+    output wire scl,
+    inout wire sda
+);
+
+    // State definition
+    typedef enum logic [2:0] {
+        IDLE,
+        START,
+        ADDRESS,
+        ACK1,
+        DATA,
+        ACK2,
+        STOP
+    } state_t;
+    
+    state_t state, next_state;
+    
+    // Signals for SDA and SCL
+    logic sda_out, sda_in, sda_dir;
+    logic scl_out;
+    
+    // Counters
+    integer clk_div_counter = 0;
+    integer bit_counter = 0;
+    
+    // Parameters
+    parameter CLK_DIV = 500;  // 50MHz / 100kHz - 1 (assuming 100kHz SCCB clock)
+    
+    assign sda = sda_dir ? sda_out : 1'bz;
+    assign sda_in = sda;
+    assign scl = scl_out;
+    
+    // FSM - State transitions
+    always_ff @(posedge clk or posedge reset) begin
+        if (reset)
+            state <= IDLE;
+        else
+            state <= next_state;
+    end
+    
+    // FSM - Next state logic and outputs
+    always_comb begin
+        next_state = state;
+        sda_dir = 1'b1; // Default to driving SDA
+        scl_out = 1'b1; // Default to SCL high
+        done = 1'b0;
+        sda_out = 1'b1; // Default to SDA high
+        
+        case (state)
+            IDLE: begin
+                if (start) begin
+                    next_state = START;
+                    clk_div_counter = 0;
+                    bit_counter = 0;
+                end
+            end
+            
+            START: begin
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    sda_out = 0;
+                    next_state = ADDRESS;
+                end
+            end
+            
+            ADDRESS: begin
+                scl_out = (clk_div_counter < CLK_DIV/2) ? 0 : 1;
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    bit_counter = bit_counter + 1;
+                    if (bit_counter < 8) begin
+                        sda_out = addr[7-bit_counter];
+                    end else begin
+                        bit_counter = 0;
+                        next_state = ACK1;
+                    end
+                end
+            end
+            
+            ACK1: begin
+                sda_dir = 1'b0; // Release SDA
+                scl_out = (clk_div_counter < CLK_DIV/2) ? 0 : 1;
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    next_state = DATA;
+                    sda_dir = 1'b1; // Drive SDA
+                    sda_out = data[7];
+                end
+            end
+            
+            DATA: begin
+                scl_out = (clk_div_counter < CLK_DIV/2) ? 0 : 1;
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    bit_counter = bit_counter + 1;
+                    if (bit_counter < 8) begin
+                        sda_out = data[7-bit_counter];
+                    end else begin
+                        bit_counter = 0;
+                        next_state = ACK2;
+                    end
+                end
+            end
+            
+            ACK2: begin
+                sda_dir = 1'b0; // Release SDA
+                scl_out = (clk_div_counter < CLK_DIV/2) ? 0 : 1;
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    next_state = STOP;
+                end
+            end
+            
+            STOP: begin
+                if (clk_div_counter < CLK_DIV) begin
+                    clk_div_counter = clk_div_counter + 1;
+                end else begin
+                    clk_div_counter = 0;
+                    sda_out = 0;
+                    next_state = IDLE;
+                    done = 1'b1;
+                end
+            end
+        endcase
+    end
+    
+endmodule
