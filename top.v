@@ -114,6 +114,7 @@ controllerObstacle controllerObstacle(
 
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
+reg [31:0] rng_number = 0;
 
 always @(posedge SLOW_CLK) begin
 
@@ -128,9 +129,14 @@ always @(posedge SLOW_CLK) begin
 
     // Game
 	if(~game_over) begin
+		
+		// rng_number = rng_number + 1;
+		// while (rng_number >= 608) begin
+		// 	rng_number = rng_number - 608;
+		// end
+		// obstacle_starting_X = rng_number;
 
-		// obstacle_starting_x = ($urandom % 607);
-       obstacle_starting_x = 100;
+        obstacle_starting_x = 100;
 	
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin

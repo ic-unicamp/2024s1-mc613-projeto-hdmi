@@ -23,36 +23,45 @@ reg [31:0] counter;
 
 always @(posedge CLOCK_50) begin
 
-	// VAI SER SUBSTITUÍDO PELO CONTROLE DE "CÂMERA"
-	case (buttonState)
-		reading: begin // Leitura
-			counter = 0;
-			if (left_button == 0) buttonState  = left;
-			if (right_button == 0) buttonState = right;
-		end
-		left: begin
-			counter = counter + 1;
-			if(counter >= 10000000/8 && player_x > 0) begin
-				player_x = player_x - step;
+	if (reset) begin
+		player_x = player_start_x;
+		player_y = player_start_y;
+		buttonState = reading;
+
+	end else begin
+
+		// VAI SER SUBSTITUÍDO PELO CONTROLE DE "CÂMERA"
+		case (buttonState)
+			reading: begin // Leitura
 				counter = 0;
+				if (left_button == 0) buttonState  = left;
+				if (right_button == 0) buttonState = right;
 			end
-			if (left_button==1) begin
-				if(player_x > 0) player_x = player_x - step;
-				buttonState = reading;
+			left: begin
+				counter = counter + 1;
+				if(counter >= 10000000/8 && player_x > 0) begin
+					player_x = player_x - step;
+					counter = 0;
+				end
+				if (left_button==1) begin
+					if(player_x > 0) player_x = player_x - step;
+					buttonState = reading;
+				end
 			end
-		end
-		right: begin
-			counter = counter + 1;
-			if(counter >= 10000000/8 && player_x < 639-player_size_x) begin
-				player_x = player_x + step;
-				counter = 0;
+			right: begin
+				counter = counter + 1;
+				if(counter >= 10000000/8 && player_x < 639-player_size_x) begin
+					player_x = player_x + step;
+					counter = 0;
+				end
+				if (right_button == 1) begin
+					if (player_x < 639-player_size_x) player_x = player_x + step;
+					buttonState = reading;
+				end 
 			end
-			if (right_button == 1) begin
-				if (player_x < 639-player_size_x) player_x = player_x + step;
-				buttonState = reading;
-			end 
-		end
-	endcase
+		endcase
+
+	end
 end
 
 endmodule
