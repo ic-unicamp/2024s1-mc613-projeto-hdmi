@@ -22,6 +22,8 @@ wire right_button = KEY[0];
 reg [31:0] counter = 0;
 reg [31:0] divider = 500000;  // Modifique para dividir a barra por um valor maior
 reg SLOW_CLK;
+wire [9:0] player_x;
+wire [9:0] player_y;
 
 // Divisor de frequência para gerar o clock da VGA e o clock da velocidade do jogo
 always @(posedge CLOCK_50) begin
@@ -69,12 +71,12 @@ vga vga(
  	.y(next_y), 
  	.vsync(VGA_VS),
  	.sprite_x(player_x), 
- 	.sprite_y(plater_y),
+ 	.sprite_y(player_y),
  	.color(player_color),
  	.drawing(player_drawing)
  );
 
-wire [9:0] player_x, player_y;
+
 
 controllerPlayer controllerPlayer(
   .CLOCK_50(CLOCK_50),
@@ -114,7 +116,6 @@ controllerObstacle controllerObstacle(
 
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
-reg [31:0] rng_number = 0;
 
 always @(posedge SLOW_CLK) begin
 
@@ -129,14 +130,9 @@ always @(posedge SLOW_CLK) begin
 
     // Game
 	if(~game_over) begin
-		
-		// rng_number = rng_number + 1;
-		// while (rng_number >= 608) begin
-		// 	rng_number = rng_number - 608;
-		// end
-		// obstacle_starting_X = rng_number;
 
-        obstacle_starting_x = 100;
+		// obstacle_starting_x = ($urandom % 607);
+       obstacle_starting_x = 100;
 	
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin

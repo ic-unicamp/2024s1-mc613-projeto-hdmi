@@ -24,9 +24,9 @@ reg [31:0] counter;
 always @(posedge CLOCK_50) begin
 
 	if (reset) begin
+		buttonState = reading;
 		player_x = player_start_x;
 		player_y = player_start_y;
-		buttonState = reading;
 
 	end else begin
 
