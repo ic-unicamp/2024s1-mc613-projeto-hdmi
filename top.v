@@ -101,10 +101,11 @@ wire [9:0] obstacle_x;
 wire [9:0] obstacle_y;
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_start_x;
 reg [9:0] obstacle_spawn_timer;
 reg [1:0] obstacle_trigger;
 reg game_over;
+
+reg [9:0] obstacle_start_x;
 
 controllerObstacle controllerObstacle(
   .clk(SLOW_CLK),
@@ -132,6 +133,8 @@ bcd2display bcd2display(
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
 
+reg [9:0] rngNumber;
+
 always @(posedge SLOW_CLK) begin
 
   // Reset (DEVE ESTAR ZUADO)
@@ -141,23 +144,26 @@ always @(posedge SLOW_CLK) begin
 	max_score = 0;
 	divider = 500000;
 
-  end else begin	
-
-    // Game
-	if(~game_over) begin
-
-		// obstacle_start_x = ($urandom % 607);
-       obstacle_start_x = 380;
-	
-		obstacle_spawn_timer = obstacle_spawn_timer + 1;
-		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin
-			obstacle_trigger = 1;
-			obstacle_spawn_timer = 0;
-		end else begin
-			obstacle_trigger = 0;
-		end
-
+  end else begin
+  
+	 rngNumber = rngNumber + 1;
+	 if (rngNumber > 607) begin
+		rngNumber = 0;
 	 end
+
+	// DEFICINIR OBSTACLE_START_X RANDOM, O LUCCA C. TEM ISSO
+	 obstacle_start_x = rngNumber;
+	 
+	 // MAS ESSA POSICAO ESTA DEFINDO O X DO OBSTACULO SEMPRE, TEM QUE SER SO O PONTO DE INICIO DELE
+
+	// obstacle_spawn_timer = obstacle_spawn_timer + 1;
+	// if (obstacle_spawn_timer >= obstacle_spawn_delay) begin
+	// 	obstacle_trigger = 1;
+	// 	obstacle_spawn_timer = 0;
+	// end else begin
+	// 	obstacle_trigger = 0;
+	// end
+	
   end
 
 end
