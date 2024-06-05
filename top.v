@@ -9,7 +9,10 @@ module top(
 	output [7:0] VGA_G,
 	output [7:0] VGA_B,
 	output VGA_BLANK_N,
-	output VGA_SYNC_N
+	output VGA_SYNC_N,
+	output [6:0] HEX0,
+	output [6:0] HEX1,
+	output [6:0] HEX2
 );
 
 wire [9:0] next_x;
@@ -76,8 +79,6 @@ vga vga(
  	.drawing(player_drawing)
  );
 
-
-
 controllerPlayer controllerPlayer(
   .CLOCK_50(CLOCK_50),
   .reset(reset),
@@ -96,22 +97,36 @@ parameter [9:0] obstacle_size_x = 32;
 parameter [9:0] obstacle_size_y = 32;
 parameter [9:0] obstacle_spawn_delay = 10000;
 
-wire obstacle_x;
-wire obstacle_y;
+wire [9:0] obstacle_x;
+wire [9:0] obstacle_y;
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_starting_x;
+reg [9:0] obstacle_start_x;
 reg [9:0] obstacle_spawn_timer;
 reg [1:0] obstacle_trigger;
 reg game_over;
 
 controllerObstacle controllerObstacle(
-  .CLOCK_50(CLOCK_50),
+  .clk(SLOW_CLK),
   .reset(reset),
-  .obstacle_trigger(obstacle_trigger),
-  .obstacle_start_x(obstacle_start_x),
+  .obstacle_trigger(1),
+  .obstacle_start_x(obstacle_start_x),  // O PROBLEMA FICA AQUI, SE SETAR O CALOR COM A VARIAVEL, N FUNCIONA
   .obstacle_x(obstacle_x),
   .obstacle_y(obstacle_y)
+);
+
+wire[11:0] valor_bcd;
+
+bin2bcd bin2bcd(
+	.valor_bin(obstacle_y),
+	.valor_bcd(valor_bcd)
+);
+
+bcd2display bcd2display(
+	.valor(valor_bcd),
+	.digito0(HEX0),
+	.digito1(HEX1),
+	.digito2(HEX2)
 );
 
 reg [6:0] max_score = 0;
@@ -131,8 +146,8 @@ always @(posedge SLOW_CLK) begin
     // Game
 	if(~game_over) begin
 
-		// obstacle_starting_x = ($urandom % 607);
-       obstacle_starting_x = 100;
+		// obstacle_start_x = ($urandom % 607);
+       obstacle_start_x = 380;
 	
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin

@@ -1,5 +1,5 @@
 module controllerObstacle(
-  input CLOCK_50,
+  input clk,
   input reset,
   // USAR OS TIPOS DE OBSTÁCULO COMO INPUT?
   input [1:0] obstacle_trigger,
@@ -14,18 +14,22 @@ parameter [9:0] obstacle_size_y = 32;
 parameter [9:0] obstacle_start_y = 0;
 parameter [9:0] step = 4;
 
-always @(posedge CLOCK_50) begin
 
-    if (obstacle_trigger) begin
-    
-        obstacle_x <= obstacle_start_x;
-        obstacle_y <= obstacle_start_y;
+always @(posedge clk) begin
 
-        if (obstacle_y < 640 - obstacle_size_y) begin
-            obstacle_y <= obstacle_y + step;
-        end
-    
-    end
+	obstacle_x = obstacle_start_x;
+	
+	if(reset) begin
+	obstacle_y =  obstacle_start_y;
+	
+	end else begin
+		if (obstacle_y < (480 - obstacle_size_y)) begin
+			obstacle_y = obstacle_y + step;
+		end else begin
+			obstacle_y = 0;
+		end
+	end
+	 
 end
 
 endmodule
