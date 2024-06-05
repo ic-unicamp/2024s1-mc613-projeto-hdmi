@@ -22,6 +22,8 @@ wire right_button = KEY[0];
 reg [31:0] counter = 0;
 reg [31:0] divider = 500000;  // Modifique para dividir a barra por um valor maior
 reg SLOW_CLK;
+wire [9:0] player_x;
+wire [9:0] player_y;
 
 // Divisor de frequência para gerar o clock da VGA e o clock da velocidade do jogo
 always @(posedge CLOCK_50) begin
@@ -74,7 +76,7 @@ vga vga(
  	.drawing(player_drawing)
  );
 
-wire [9:0] player_x, player_y;
+
 
 controllerPlayer controllerPlayer(
   .CLOCK_50(CLOCK_50),
@@ -98,7 +100,7 @@ wire obstacle_x;
 wire obstacle_y;
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_start_x;
+reg [9:0] obstacle_starting_x;
 reg [9:0] obstacle_spawn_timer;
 reg [1:0] obstacle_trigger;
 reg game_over;
@@ -115,20 +117,6 @@ controllerObstacle controllerObstacle(
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
 
-reg [6:0] spawn_position_index = 0;
-reg [9:0] spawn_position_list [0:99];
-spawn_position_list[0:99] = '{
-	305, 419, 548, 474, 247,  42, 189, 307, 567, 433,
-	116, 510,  32, 535, 181,   5, 260, 201, 532, 249,
-	333, 217, 376, 130,  35, 115, 583,  90, 243, 205,
-	429, 515,  88, 556, 348, 371, 298, 602, 386, 328,
-	203, 364, 270, 507, 366,  56,  83, 523, 476,  71,
-	324, 494, 480, 225, 579, 365,   7, 502, 394, 447,
-	346,  26, 289,  37, 513, 207,   8,   9,  68, 398,
-	104, 530,  52, 606, 136, 188, 357, 131, 399, 540,
-	 51,  60, 214, 396, 226, 316, 254, 251, 134, 318,
-	237, 206,  48, 180, 241, 110, 144, 482, 145, 551};
-
 always @(posedge SLOW_CLK) begin
 
   // Reset (DEVE ESTAR ZUADO)
@@ -142,17 +130,10 @@ always @(posedge SLOW_CLK) begin
 
     // Game
 	if(~game_over) begin
-		
-		// spawn_position_index = spawn_position_index + 1;
-		// if (spawn_position_index >= 100) begin
-		// 	spawn_position_index = spawn_position_index - 100;
-		// end
 
-		// FAZER O spawn_position_list[spawn_position_index] SER O SPAWN DO OBSTÁCULO
-        // obstacle_start_x = spawn_position_list[spawn_position_index];
-
-		obstacle_start_x = 100;
-
+		// obstacle_starting_x = ($urandom % 607);
+       obstacle_starting_x = 100;
+	
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin
 			obstacle_trigger = 1;
