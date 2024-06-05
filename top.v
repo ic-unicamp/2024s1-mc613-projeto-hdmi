@@ -69,7 +69,7 @@ vga vga(
  	.y(next_y), 
  	.vsync(VGA_VS),
  	.sprite_x(player_x), 
- 	.sprite_y(plater_y),
+ 	.sprite_y(player_y),
  	.color(player_color),
  	.drawing(player_drawing)
  );
@@ -98,7 +98,7 @@ wire obstacle_x;
 wire obstacle_y;
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_starting_x;
+reg [9:0] obstacle_start_x;
 reg [9:0] obstacle_spawn_timer;
 reg [1:0] obstacle_trigger;
 reg game_over;
@@ -114,7 +114,20 @@ controllerObstacle controllerObstacle(
 
 reg [6:0] max_score = 0;
 reg [6:0] score = 0;
-reg [31:0] rng_number = 0;
+
+reg [6:0] spawn_position_index = 0;
+reg [9:0] spawn_position_list [0:99];
+spawn_position_list[0:99] = '{
+	305, 419, 548, 474, 247,  42, 189, 307, 567, 433,
+	116, 510,  32, 535, 181,   5, 260, 201, 532, 249,
+	333, 217, 376, 130,  35, 115, 583,  90, 243, 205,
+	429, 515,  88, 556, 348, 371, 298, 602, 386, 328,
+	203, 364, 270, 507, 366,  56,  83, 523, 476,  71,
+	324, 494, 480, 225, 579, 365,   7, 502, 394, 447,
+	346,  26, 289,  37, 513, 207,   8,   9,  68, 398,
+	104, 530,  52, 606, 136, 188, 357, 131, 399, 540,
+	 51,  60, 214, 396, 226, 316, 254, 251, 134, 318,
+	237, 206,  48, 180, 241, 110, 144, 482, 145, 551};
 
 always @(posedge SLOW_CLK) begin
 
@@ -130,14 +143,16 @@ always @(posedge SLOW_CLK) begin
     // Game
 	if(~game_over) begin
 		
-		// rng_number = rng_number + 1;
-		// while (rng_number >= 608) begin
-		// 	rng_number = rng_number - 608;
+		// spawn_position_index = spawn_position_index + 1;
+		// if (spawn_position_index >= 100) begin
+		// 	spawn_position_index = spawn_position_index - 100;
 		// end
-		// obstacle_starting_X = rng_number;
 
-        obstacle_starting_x = 100;
-	
+		// FAZER O spawn_position_list[spawn_position_index] SER O SPAWN DO OBSTÁCULO
+        // obstacle_start_x = spawn_position_list[spawn_position_index];
+
+		obstacle_start_x = 100;
+
 		obstacle_spawn_timer = obstacle_spawn_timer + 1;
 		if (obstacle_spawn_timer >= obstacle_spawn_delay) begin
 			obstacle_trigger = 1;
