@@ -1,11 +1,12 @@
 module Projeto (
 	input CLOCK_50,
 	input [3:0] KEY,
+	input [9:0] SW,
 	output CLOCK_24,
 	inout [35:0] GPIO_0,
 	output VGA_CLK,
    output VGA_HS,
-	output VGA_VS,
+	output VGA_VS,	
 	output [7:0] VGA_R,
 	output [7:0] VGA_G,
 	output [7:0] VGA_B,
@@ -13,6 +14,8 @@ module Projeto (
 	output VGA_SYNC_N
 );
 
+wire cbc = SW[9:7];
+wire crc = SW[6:4]; 
 wire reset = !KEY[0];
 wire start = !KEY[3];
 wire resetsccb = !KEY[1];
@@ -31,62 +34,9 @@ assign sio_c = GPIO_0[25];
 wire [9:0] next_x_vga;
 wire [9:0] next_y_vga;
 wire wren;
-wire [7:0] vga_out;
+wire [8:0] vga_out;
 wire [9:0] next_x_cam;
 wire [9:0] next_y_cam;
-
-//reg [7:0] address;
-//reg [7:0] data;
-
-//initial begin
-//	address = 8'h12;
-//	data = 8'h04;
-//end
-//
-//
-//SCCBGPT SCCBGPT (
-//    .clk(CLOCK_50),
-//    .reset(reset),
-//    .start(start),
-//    .addr(address),
-//    .data(data),
-//    .done(),
-//    .scl(sio_c),
-//    .sda(sio_d)
-//);
-//sccb sccb (
-//    .clock(CLOCK_50),
-//    .reset(reset),
-//    .start(start),
-//    .sccb_clk(sio_c),
-//    .sccb_dat(sio_d)
-//);
-
-SCCBProfessor SCCBProfessor(
-	.clk(CLOCK_50),
-	.reset(reset),
-	.resetsccb(resetsccb),
-	.start(start),
-	.sio_c(sio_c),
-	.sio_d(sio_d)
-);
-//reg [7:0] address;
-//reg [7:0] data;
-//
-//initial begin
-//	address = 00010010;
-//	data = 00000100;
-//end
-//
-//SCCB_interface SCCB_interface(
-//    .clk(CLOCK_50),
-//    .start(start),
-//    .address(address),
-//    .data(data),
-//    .ready(),
-//    .SIOC_oe(sio_c),
-//    .SIOD_oe(sio_d)
-// );
 
 pll pll_inst (
 	.refclk   (CLOCK_50),   //  refclk.clk
@@ -95,12 +45,23 @@ pll pll_inst (
 	.locked   ()    //  locked.export
 );
 
+wire [18:0] next_cam;
+wire [18:0] next_vga;
+
+assign next_cam = next_x_cam + (640 * next_y_cam);
+assign next_vga = next_x_vga + (640 * next_y_vga);
+
+wire [7:0] red;
+wire [7:0] green;
+wire [7:0] blue;
+wire [17:0] rgb;
+
 vga vga_inst(
   .reset(reset),
   .CLOCK_50(CLOCK_50),
-  .red(vga_out),
-  .green(vga_out),
-  .blue(vga_out),
+  .red(red),
+  .green(green),
+  .blue(blue),
   .VGA_CLK(VGA_CLK),
   .VGA_HS(VGA_HS),
   .VGA_VS(VGA_VS),
@@ -114,26 +75,36 @@ vga vga_inst(
   .line()
 );
 
-Camera camera(
+CameraRGB camera(
 	.pclk(pclk),
 	.reset(reset),
 	.href(href),
 	.wren(wren),
+	.pixel(pixel),
 	.cam_vsync(cam_vsync),
 	.next_x(next_x_cam),
-	.next_y(next_y_cam)
+	.next_y(next_y_cam),
+	.rgb(rgb),
+	.cbc(cbc),
+	.crc(crc)
 );
 
 Buffer buffer(
 	.wrclk(pclk),
 	.rdclk(VGA_CLK),
-	.wraddress_x(next_x_cam),
-	.wraddress_y(next_y_cam),
-	.write_data(pixel),
+	.wraddress(next_cam),
+	.write_data(rgb),
 	.wren(wren),
-	.rdaddress_x(next_x_vga),
-	.rdaddress_y(next_y_vga),
+	.rdaddress(next_vga),
 	.read_data(vga_out)
 );
+
+//assign red = vga_out[7:0];
+//assign green = vga_out[7:0];
+//assign blue = vga_out[7:0];
+
+assign red = {vga_out[8:6], 5'b00000};
+assign green = {vga_out[5:3], 5'b00000};
+assign blue = {vga_out[2:0], 5'b00000};
 
 endmodule

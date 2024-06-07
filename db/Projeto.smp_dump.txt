@@ -1,5 +1,5 @@
 
-State Machine - |Projeto|Camera:camera|state
+State Machine - |Projeto|CameraRGB:camera|state
 Name state.000 state.COUNT state.WAIT_VSYNC_DOWN 
 state.000 0 0 0 
 state.WAIT_VSYNC_DOWN 1 0 1 
