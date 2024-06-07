@@ -16,8 +16,6 @@ parameter [9:0] step = 4;
 
 
 always @(posedge clk) begin
-
-	obstacle_x = obstacle_start_x;
 	
 	if(reset) begin
 	obstacle_y =  obstacle_start_y;
@@ -27,6 +25,7 @@ always @(posedge clk) begin
 			obstacle_y = obstacle_y + step;
 		end else begin
 			obstacle_y = 0;
+            obstacle_x = obstacle_start_x;
 		end
 	end
 	 

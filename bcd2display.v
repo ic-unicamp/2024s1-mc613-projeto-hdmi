@@ -1,8 +1,8 @@
 module bcd2display(
   input [11:0] valor,
   output reg [6:0] digito0, // _ _ _ _ _ D
-  output reg [6:0] digito1 // _ _ _ _ D _
-  output reg [6:0] digito2 // _ _ _ D _ _
+  output reg [6:0] digito1, // _ _ _ _ D _
+  output reg [6:0] digito2  // _ _ _ D _ _
 );
 
 // Não usar posedge e negedge, quando o somar sobe ou desce, fazer a operação 1 vez
