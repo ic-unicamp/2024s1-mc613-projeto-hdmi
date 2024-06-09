@@ -23,7 +23,7 @@ wire right_button = KEY[0];
 
 // Variáveis para o clock
 reg [31:0] counter = 0;
-reg [31:0] divider = 500000;  // Modifique para dividir a barra por um valor maior
+reg [31:0] divider = 750000;
 reg SLOW_CLK;
 wire [9:0] player_x;
 wire [9:0] player_y;
@@ -141,16 +141,16 @@ reg [7:0] red;
 reg [7:0] green;
 reg [7:0] blue;
 
-// Obstacle parameters
+// Player & Obstacle Parameters
+parameter [9:0] player_size_x = 32;
+parameter [9:0] player_size_y = 16;
 parameter [9:0] obstacle_size_x = 32;
 parameter [9:0] obstacle_size_y = 32;
-parameter [9:0] obstacle_spawn_delay = 10000;
 
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
-reg [9:0] obstacle_spawn_timer;
 reg [1:0] obstacle_trigger;
-reg game_over;
+reg [1:0] game_over;
 
 wire [9:0] obstacle0_x;
 wire [9:0] obstacle1_x;
@@ -168,50 +168,60 @@ reg [9:0] obstacle1_start_x;
 reg [9:0] obstacle2_start_x;
 reg [9:0] obstacle3_start_x;
 reg [9:0] obstacle4_start_x;
+reg [9:0] obstacle0_start_y;
+reg [9:0] obstacle1_start_y;
+reg [9:0] obstacle2_start_y;
+reg [9:0] obstacle3_start_y;
+reg [9:0] obstacle4_start_y;
 
 controllerObstacle controllerObstacle0(
-  .clk(SLOW_CLK),
-  .reset(reset),
-  .obstacle_trigger(1),
-  .obstacle_start_x(obstacle0_start_x),
-  .obstacle_x(obstacle0_x),
-  .obstacle_y(obstacle0_y)
+	.clk(SLOW_CLK),
+	.reset(reset),
+	.obstacle_trigger(1),
+	.obstacle_start_x(obstacle0_start_x),
+	.obstacle_start_y(obstacle0_start_y),
+	.obstacle_x(obstacle0_x),
+	.obstacle_y(obstacle0_y)
 );
 
 controllerObstacle controllerObstacle1(
-  .clk(SLOW_CLK),
-  .reset(reset),
-  .obstacle_trigger(1),
-  .obstacle_start_x(obstacle1_start_x),
-  .obstacle_x(obstacle1_x),
-  .obstacle_y(obstacle1_y)
+	.clk(SLOW_CLK),
+	.reset(reset),
+	.obstacle_trigger(1),
+	.obstacle_start_x(obstacle1_start_x),
+	.obstacle_start_y(obstacle1_start_y),
+	.obstacle_x(obstacle1_x),
+	.obstacle_y(obstacle1_y)
 );
 
 controllerObstacle controllerObstacle2(
-  .clk(SLOW_CLK),
-  .reset(reset),
-  .obstacle_trigger(1),
-  .obstacle_start_x(obstacle2_start_x),
-  .obstacle_x(obstacle2_x),
-  .obstacle_y(obstacle2_y)
+	.clk(SLOW_CLK),
+	.reset(reset),
+	.obstacle_trigger(1),
+	.obstacle_start_x(obstacle2_start_x),
+	.obstacle_start_y(obstacle2_start_y),
+	.obstacle_x(obstacle2_x),
+	.obstacle_y(obstacle2_y)
 );
 
 controllerObstacle controllerObstacle3(
-  .clk(SLOW_CLK),
-  .reset(reset),
-  .obstacle_trigger(1),
-  .obstacle_start_x(obstacle3_start_x),
-  .obstacle_x(obstacle3_x),
-  .obstacle_y(obstacle3_y)
+	.clk(SLOW_CLK),
+	.reset(reset),
+	.obstacle_trigger(1),
+	.obstacle_start_x(obstacle3_start_x),
+	.obstacle_start_y(obstacle3_start_y),
+	.obstacle_x(obstacle3_x),
+	.obstacle_y(obstacle3_y)
 );
 
 controllerObstacle controllerObstacle4(
-  .clk(SLOW_CLK),
-  .reset(reset),
-  .obstacle_trigger(1),
-  .obstacle_start_x(obstacle4_start_x),
-  .obstacle_x(obstacle4_x),
-  .obstacle_y(obstacle4_y)
+	.clk(SLOW_CLK),
+	.reset(reset),
+	.obstacle_trigger(1),
+	.obstacle_start_x(obstacle4_start_x),
+	.obstacle_start_y(obstacle4_start_y),
+	.obstacle_x(obstacle4_x),
+	.obstacle_y(obstacle4_y)
 );
 
 wire[11:0] valor_bcd;
@@ -228,8 +238,8 @@ bcd2display bcd2display(
 	.digito2(HEX2)
 );
 
-reg [6:0] max_score = 0;
-reg [6:0] score = 0;
+reg [9:0] max_score = 0;
+reg [9:0] score = 0;
 
 reg [6:0] spawn_position_index = 0;
 reg [9:0] spawn_position_list [0:99];
@@ -340,12 +350,18 @@ end
 
 always @(posedge SLOW_CLK) begin
 
-  // Reset (DEVE ESTAR ZUADO)
 	if (reset) begin
-		game_over = 1;
+
+		game_over = 0;
 		score = 0;
 		max_score = 0;
-		divider = 500000;
+		divider = 750000;
+
+		obstacle0_start_y = 10'd0;
+		obstacle1_start_y = 10'd64;
+		obstacle2_start_y = 10'd128;
+		obstacle3_start_y = 10'd192;
+		obstacle4_start_y = 10'd256;
 
 	end else begin
  
@@ -361,16 +377,40 @@ always @(posedge SLOW_CLK) begin
 		obstacle3_start_x = spawn_position_list[spawn_position_index + 4];
 		obstacle4_start_x = spawn_position_list[spawn_position_index + 5];
 
-		// obstacle_spawn_timer = obstacle_spawn_timer + 1;
-		// if (obstacle_spawn_timer >= obstacle_spawn_delay) begin
-		// obstacle_trigger = 1;
-		// obstacle_spawn_timer = 0;
-		// end else begin
-		// obstacle_trigger = 0;
-		// end
+		// COLLISIONS
+		// Deveria fazer um game over, mas estou só somando o score pra observar
+		if (((player_x >= obstacle0_x) && (player_x <= obstacle0_x + obstacle_size_x) ||
+		(player_x + player_size_x >= obstacle0_x) && (player_x + player_size_x <= obstacle0_x + obstacle_size_x)) &&
+		(player_y >= obstacle0_y) && (player_y <= obstacle0_y + obstacle_size_y)) begin
+			score = score + 1;
+		end
+		if (((player_x >= obstacle1_x) && (player_x <= obstacle1_x + obstacle_size_x) ||
+		(player_x + player_size_x >= obstacle1_x) && (player_x + player_size_x <= obstacle1_x + obstacle_size_x)) &&
+		(player_y >= obstacle1_y) && (player_y <= obstacle1_y + obstacle_size_y)) begin
+			score = score + 1;
+		end
+		if (((player_x >= obstacle2_x) && (player_x <= obstacle2_x + obstacle_size_x) ||
+		(player_x + player_size_x >= obstacle2_x) && (player_x + player_size_x <= obstacle2_x + obstacle_size_x)) &&
+		(player_y >= obstacle2_y) && (player_y <= obstacle2_y + obstacle_size_y)) begin
+			score = score + 1;
+		end
+		if (((player_x >= obstacle3_x) && (player_x <= obstacle3_x + obstacle_size_x) ||
+		(player_x + player_size_x >= obstacle3_x) && (player_x + player_size_x <= obstacle3_x + obstacle_size_x)) &&
+		(player_y >= obstacle3_y) && (player_y <= obstacle3_y + obstacle_size_y)) begin
+			score = score + 1;
+		end
+		if (((player_x >= obstacle4_x) && (player_x <= obstacle4_x + obstacle_size_x) ||
+		(player_x + player_size_x >= obstacle4_x) && (player_x + player_size_x <= obstacle4_x + obstacle_size_x)) &&
+		(player_y >= obstacle4_y) && (player_y <= obstacle4_y + obstacle_size_y)) begin
+			score = score + 1;
+		end
 
-  	end
+	// Acelerar jogo até um limite
+	divider = divider - 100;
+	if (divider < 250000) divider = 250000;
 
+	end
+ 
 end
 
 always @ (posedge CLOCK_50) begin

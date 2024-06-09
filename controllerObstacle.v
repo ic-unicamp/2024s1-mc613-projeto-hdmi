@@ -4,6 +4,7 @@ module controllerObstacle(
   // USAR OS TIPOS DE OBSTÁCULO COMO INPUT?
   input [1:0] obstacle_trigger,
   input [9:0] obstacle_start_x,
+  input [9:0] obstacle_start_y,
   output reg [9:0] obstacle_x,
   output reg [9:0] obstacle_y
 );
@@ -11,7 +12,6 @@ module controllerObstacle(
 // Obstacle parameters
 parameter [9:0] obstacle_size_x = 32;
 parameter [9:0] obstacle_size_y = 32;
-parameter [9:0] obstacle_start_y = 0;
 parameter [9:0] step = 4;
 
 
