@@ -1,4 +1,4 @@
-module spriteObjeto3 (
+module spriteObstaculo (
 	input clk,
 	input reset,
 	input [9:0] x, y, sprite_x, sprite_y,
