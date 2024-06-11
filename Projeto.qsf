@@ -399,5 +399,9 @@ set_global_assignment -name VERILOG_FILE sccb.v
 set_global_assignment -name VERILOG_FILE SCCBGPT.v
 set_global_assignment -name SIGNALTAP_FILE stp1.stp
 set_global_assignment -name VERILOG_FILE Buffer8.v
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VERILOG_FILE output_files/Calibrator.v
+set_global_assignment -name VERILOG_FILE bintobcd.v
+set_global_assignment -name VERILOG_FILE bcd2decdisplay.v
+set_global_assignment -name VERILOG_FILE spriteBarra.v
 set_global_assignment -name SLD_FILE db/stp1_auto_stripped.stp
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

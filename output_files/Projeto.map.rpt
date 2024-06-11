@@ -1,5 +1,5 @@
 Analysis & Synthesis report for Projeto
-Wed Jun  5 18:43:18 2024
+Tue Jun 11 12:52:19 2024
 Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
 
 
@@ -14,30 +14,34 @@ Quartus Prime Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
   8. Analysis & Synthesis RAM Summary
-  9. Analysis & Synthesis DSP Block Usage Summary
- 10. Analysis & Synthesis IP Cores Summary
+  9. Analysis & Synthesis IP Cores Summary
+ 10. State Machine - |Projeto|Calibrator:Calibrator|state
  11. State Machine - |Projeto|CameraRGB:camera|state
  12. Registers Removed During Synthesis
- 13. General Register Statistics
- 14. Inverted Register Statistics
- 15. Registers Packed Into Inferred Megafunctions
- 16. Multiplexer Restructuring Statistics (Restructuring Performed)
- 17. Source assignments for sld_signaltap:auto_signaltap_0
- 18. Source assignments for Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated
- 19. Parameter Settings for User Entity Instance: pll:pll_inst|pll_0002:pll_inst|altera_pll:altera_pll_i
- 20. Parameter Settings for User Entity Instance: CameraRGB:camera
- 21. Parameter Settings for Inferred Entity Instance: sld_signaltap:auto_signaltap_0
- 22. Parameter Settings for Inferred Entity Instance: Buffer:buffer|altsyncram:memoria_rtl_0
- 23. altsyncram Parameter Settings by Entity Instance
- 24. Port Connectivity Checks: "CameraRGB:camera"
- 25. Port Connectivity Checks: "vga:vga_inst"
- 26. Port Connectivity Checks: "pll:pll_inst"
- 27. Signal Tap Logic Analyzer Settings
- 28. Post-Synthesis Netlist Statistics for Top Partition
- 29. Elapsed Time Per Partition
- 30. Connections to In-System Debugging Instance "auto_signaltap_0"
- 31. Analysis & Synthesis Messages
- 32. Analysis & Synthesis Suppressed Messages
+ 13. Removed Registers Triggering Further Register Optimizations
+ 14. General Register Statistics
+ 15. Inverted Register Statistics
+ 16. Registers Packed Into Inferred Megafunctions
+ 17. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 18. Source assignments for sld_signaltap:auto_signaltap_0
+ 19. Source assignments for Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated
+ 20. Parameter Settings for User Entity Instance: pll:pll_inst|pll_0002:pll_inst|altera_pll:altera_pll_i
+ 21. Parameter Settings for User Entity Instance: CameraRGB:camera
+ 22. Parameter Settings for User Entity Instance: Calibrator:Calibrator
+ 23. Parameter Settings for User Entity Instance: spriteBarra:spriteBarra
+ 24. Parameter Settings for Inferred Entity Instance: sld_signaltap:auto_signaltap_0
+ 25. Parameter Settings for Inferred Entity Instance: Buffer:buffer|altsyncram:memoria_rtl_0
+ 26. altsyncram Parameter Settings by Entity Instance
+ 27. Port Connectivity Checks: "bintobcd:tobcdcbt"
+ 28. Port Connectivity Checks: "bintobcd:tobcdcrt"
+ 29. Port Connectivity Checks: "vga:vga_inst"
+ 30. Port Connectivity Checks: "pll:pll_inst"
+ 31. Signal Tap Logic Analyzer Settings
+ 32. Post-Synthesis Netlist Statistics for Top Partition
+ 33. Elapsed Time Per Partition
+ 34. Connections to In-System Debugging Instance "auto_signaltap_0"
+ 35. Analysis & Synthesis Messages
+ 36. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -63,17 +67,17 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Wed Jun  5 18:43:18 2024       ;
+; Analysis & Synthesis Status     ; Successful - Tue Jun 11 12:52:19 2024       ;
 ; Quartus Prime Version           ; 17.1.0 Build 590 10/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; Projeto                                     ;
 ; Top-level Entity Name           ; Projeto                                     ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 499                                         ;
-; Total pins                      ; 81                                          ;
+; Total registers                 ; 563                                         ;
+; Total pins                      ; 123                                         ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 2,765,440                                   ;
-; Total DSP Blocks                ; 4                                           ;
+; Total DSP Blocks                ; 0                                           ;
 ; Total HSSI RX PCSs              ; 0                                           ;
 ; Total HSSI PMA RX Deserializers ; 0                                           ;
 ; Total HSSI TX PCSs              ; 0                                           ;
@@ -204,6 +208,10 @@ refer to the applicable agreement for further details.
 ; Projeto.v                                                          ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v                                                          ;             ;
 ; pll.v                                                              ; yes             ; User Wizard-Generated File                   ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/pll.v                                                              ; pll         ;
 ; pll/pll_0002.v                                                     ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/pll/pll_0002.v                                                     ; pll         ;
+; output_files/Calibrator.v                                          ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/output_files/Calibrator.v                                          ;             ;
+; bintobcd.v                                                         ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v                                                         ;             ;
+; bcd2decdisplay.v                                                   ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bcd2decdisplay.v                                                   ;             ;
+; spriteBarra.v                                                      ; yes             ; User Verilog HDL File                        ; /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v                                                      ;             ;
 ; altera_pll.v                                                       ; yes             ; Megafunction                                 ; /opt/altera/17.1/quartus/libraries/megafunctions/altera_pll.v                                                                          ;             ;
 ; sld_signaltap.vhd                                                  ; yes             ; Megafunction                                 ; /opt/altera/17.1/quartus/libraries/megafunctions/sld_signaltap.vhd                                                                     ;             ;
 ; sld_signaltap_impl.vhd                                             ; yes             ; Encrypted Megafunction                       ; /opt/altera/17.1/quartus/libraries/megafunctions/sld_signaltap_impl.vhd                                                                ;             ;
@@ -275,30 +283,30 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+-----------------+
 ; Resource                                    ; Usage           ;
 +---------------------------------------------+-----------------+
-; Estimate of Logic utilization (ALMs needed) ; 562             ;
+; Estimate of Logic utilization (ALMs needed) ; 651             ;
 ;                                             ;                 ;
-; Combinational ALUT usage for logic          ; 758             ;
-;     -- 7 input functions                    ; 2               ;
-;     -- 6 input functions                    ; 277             ;
-;     -- 5 input functions                    ; 79              ;
-;     -- 4 input functions                    ; 72              ;
-;     -- <=3 input functions                  ; 328             ;
+; Combinational ALUT usage for logic          ; 878             ;
+;     -- 7 input functions                    ; 11              ;
+;     -- 6 input functions                    ; 316             ;
+;     -- 5 input functions                    ; 116             ;
+;     -- 4 input functions                    ; 114             ;
+;     -- <=3 input functions                  ; 321             ;
 ;                                             ;                 ;
-; Dedicated logic registers                   ; 499             ;
+; Dedicated logic registers                   ; 563             ;
 ;                                             ;                 ;
-; I/O pins                                    ; 81              ;
+; I/O pins                                    ; 123             ;
 ; Total MLAB memory bits                      ; 0               ;
 ; Total block memory bits                     ; 2765440         ;
 ;                                             ;                 ;
-; Total DSP Blocks                            ; 4               ;
+; Total DSP Blocks                            ; 0               ;
 ;                                             ;                 ;
 ; Total PLLs                                  ; 1               ;
 ;     -- PLLs                                 ; 1               ;
 ;                                             ;                 ;
 ; Maximum fan-out node                        ; GPIO_0[9]~input ;
-; Maximum fan-out                             ; 393             ;
-; Total fan-out                               ; 15729           ;
-; Average fan-out                             ; 8.66            ;
+; Maximum fan-out                             ; 426             ;
+; Total fan-out                               ; 16651           ;
+; Average fan-out                             ; 8.01            ;
 +---------------------------------------------+-----------------+
 
 
@@ -307,14 +315,18 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                                 ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |Projeto                                                                                                                                ; 758 (35)            ; 499 (0)                   ; 2765440           ; 4          ; 81   ; 0            ; |Projeto                                                                                                                                                                                                                                                                                                                                            ; Projeto                           ; work         ;
+; |Projeto                                                                                                                                ; 878 (37)            ; 563 (0)                   ; 2765440           ; 0          ; 123  ; 0            ; |Projeto                                                                                                                                                                                                                                                                                                                                            ; Projeto                           ; work         ;
 ;    |Buffer:buffer|                                                                                                                      ; 185 (0)             ; 6 (0)                     ; 2764800           ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer                                                                                                                                                                                                                                                                                                                              ; Buffer                            ; work         ;
 ;       |altsyncram:memoria_rtl_0|                                                                                                        ; 185 (0)             ; 6 (0)                     ; 2764800           ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer|altsyncram:memoria_rtl_0                                                                                                                                                                                                                                                                                                     ; altsyncram                        ; work         ;
 ;          |altsyncram_4jj1:auto_generated|                                                                                               ; 185 (0)             ; 6 (6)                     ; 2764800           ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated                                                                                                                                                                                                                                                                      ; altsyncram_4jj1                   ; work         ;
 ;             |decode_3na:decode2|                                                                                                        ; 48 (48)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated|decode_3na:decode2                                                                                                                                                                                                                                                   ; decode_3na                        ; work         ;
 ;             |decode_s2a:rden_decode_b|                                                                                                  ; 38 (38)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated|decode_s2a:rden_decode_b                                                                                                                                                                                                                                             ; decode_s2a                        ; work         ;
 ;             |mux_khb:mux3|                                                                                                              ; 99 (99)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated|mux_khb:mux3                                                                                                                                                                                                                                                         ; mux_khb                           ; work         ;
-;    |CameraRGB:camera|                                                                                                                   ; 155 (155)           ; 51 (51)                   ; 0                 ; 4          ; 0    ; 0            ; |Projeto|CameraRGB:camera                                                                                                                                                                                                                                                                                                                           ; CameraRGB                         ; work         ;
+;    |Calibrator:Calibrator|                                                                                                              ; 25 (25)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|Calibrator:Calibrator                                                                                                                                                                                                                                                                                                                      ; Calibrator                        ; work         ;
+;    |CameraRGB:camera|                                                                                                                   ; 177 (177)           ; 84 (84)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|CameraRGB:camera                                                                                                                                                                                                                                                                                                                           ; CameraRGB                         ; work         ;
+;    |bcd2decdisplay:bcd2decdisplay|                                                                                                      ; 34 (34)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|bcd2decdisplay:bcd2decdisplay                                                                                                                                                                                                                                                                                                              ; bcd2decdisplay                    ; work         ;
+;    |bintobcd:tobcdcbt|                                                                                                                  ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|bintobcd:tobcdcbt                                                                                                                                                                                                                                                                                                                          ; bintobcd                          ; work         ;
+;    |bintobcd:tobcdcrt|                                                                                                                  ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|bintobcd:tobcdcrt                                                                                                                                                                                                                                                                                                                          ; bintobcd                          ; work         ;
 ;    |pll:pll_inst|                                                                                                                       ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|pll:pll_inst                                                                                                                                                                                                                                                                                                                               ; pll                               ; pll          ;
 ;       |pll_0002:pll_inst|                                                                                                               ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|pll:pll_inst|pll_0002:pll_inst                                                                                                                                                                                                                                                                                                             ; pll_0002                          ; pll          ;
 ;          |altera_pll:altera_pll_i|                                                                                                      ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|pll:pll_inst|pll_0002:pll_inst|altera_pll:altera_pll_i                                                                                                                                                                                                                                                                                     ; altera_pll                        ; work         ;
@@ -363,7 +375,8 @@ refer to the applicable agreement for further details.
 ;                |lpm_shiftreg:ram_data_shift_out|                                                                                        ; 5 (5)               ; 5 (5)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|sld_offload_buffer_mgr:\stp_non_zero_depth_offload_gen:stp_offload_buff_mgr_inst|lpm_shiftreg:ram_data_shift_out                                                                                                               ; lpm_shiftreg                      ; work         ;
 ;                |lpm_shiftreg:status_data_shift_out|                                                                                     ; 1 (1)               ; 15 (15)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|sld_offload_buffer_mgr:\stp_non_zero_depth_offload_gen:stp_offload_buff_mgr_inst|lpm_shiftreg:status_data_shift_out                                                                                                            ; lpm_shiftreg                      ; work         ;
 ;             |sld_rom_sr:crc_rom_sr|                                                                                                     ; 20 (20)             ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |Projeto|sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|sld_rom_sr:crc_rom_sr                                                                                                                                                                                                          ; sld_rom_sr                        ; work         ;
-;    |vga:vga_inst|                                                                                                                       ; 77 (77)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|vga:vga_inst                                                                                                                                                                                                                                                                                                                               ; vga                               ; work         ;
+;    |spriteBarra:spriteBarra|                                                                                                            ; 16 (16)             ; 10 (10)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|spriteBarra:spriteBarra                                                                                                                                                                                                                                                                                                                    ; spriteBarra                       ; work         ;
+;    |vga:vga_inst|                                                                                                                       ; 78 (78)             ; 21 (21)                   ; 0                 ; 0          ; 0    ; 0            ; |Projeto|vga:vga_inst                                                                                                                                                                                                                                                                                                                               ; vga                               ; work         ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
@@ -376,19 +389,6 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; Buffer:buffer|altsyncram:memoria_rtl_0|altsyncram_4jj1:auto_generated|ALTSYNCRAM                                                                                                                      ; AUTO ; Simple Dual Port ; 307200       ; 9            ; 307200       ; 9            ; 2764800 ; None ;
 ; sld_signaltap:auto_signaltap_0|sld_signaltap_impl:sld_signaltap_body|sld_signaltap_implb:sld_signaltap_body|altsyncram:\stp_non_zero_ram_gen:stp_buffer_ram|altsyncram_g884:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 128          ; 5            ; 128          ; 5            ; 640     ; None ;
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+---------+------+
-
-
-+-----------------------------------------------+
-; Analysis & Synthesis DSP Block Usage Summary  ;
-+---------------------------------+-------------+
-; Statistic                       ; Number Used ;
-+---------------------------------+-------------+
-; Two Independent 18x18           ; 3           ;
-; Independent 18x18 plus 36       ; 1           ;
-; Total number of DSP blocks      ; 4           ;
-;                                 ;             ;
-; Fixed Point Unsigned Multiplier ; 4           ;
-+---------------------------------+-------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -406,6 +406,20 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 
 
 Encoding Type:  One-Hot
++----------------------------------------------------------------------------------------------------------------+
+; State Machine - |Projeto|Calibrator:Calibrator|state                                                           ;
++--------------------+------------------+--------------------+------------------+-----------+--------------------+
+; Name               ; state.cbbupstate ; state.crbdownstate ; state.crbupstate ; state.000 ; state.cbbdownstate ;
++--------------------+------------------+--------------------+------------------+-----------+--------------------+
+; state.000          ; 0                ; 0                  ; 0                ; 0         ; 0                  ;
+; state.crbupstate   ; 0                ; 0                  ; 1                ; 1         ; 0                  ;
+; state.crbdownstate ; 0                ; 1                  ; 0                ; 1         ; 0                  ;
+; state.cbbupstate   ; 1                ; 0                  ; 0                ; 1         ; 0                  ;
+; state.cbbdownstate ; 0                ; 0                  ; 0                ; 1         ; 1                  ;
++--------------------+------------------+--------------------+------------------+-----------+--------------------+
+
+
+Encoding Type:  One-Hot
 +-------------------------------------------------------------------------+
 ; State Machine - |Projeto|CameraRGB:camera|state                         ;
 +-----------------------+-----------+-------------+-----------------------+
@@ -417,14 +431,55 @@ Encoding Type:  One-Hot
 +-----------------------+-----------+-------------+-----------------------+
 
 
-+------------------------------------------------------------+
-; Registers Removed During Synthesis                         ;
-+---------------------------------------+--------------------+
-; Register name                         ; Reason for Removal ;
-+---------------------------------------+--------------------+
-; CameraRGB:camera|state~7              ; Lost fanout        ;
-; Total Number of Removed Registers = 1 ;                    ;
-+---------------------------------------+--------------------+
++-------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                  ;
++--------------------------------------------+----------------------------------------+
+; Register name                              ; Reason for Removal                     ;
++--------------------------------------------+----------------------------------------+
+; CameraRGB:camera|posy[9]                   ; Stuck at GND due to stuck port data_in ;
+; CameraRGB:camera|posy[6]                   ; Stuck at VCC due to stuck port data_in ;
+; CameraRGB:camera|posy[4,5]                 ; Stuck at GND due to stuck port data_in ;
+; CameraRGB:camera|posy[2,3,8]               ; Stuck at VCC due to stuck port data_in ;
+; CameraRGB:camera|posy[0,1]                 ; Stuck at GND due to stuck port data_in ;
+; CameraRGB:camera|posy[7]                   ; Stuck at VCC due to stuck port data_in ;
+; spriteBarra:spriteBarra|sprite_y_reg[0,1]  ; Stuck at GND due to stuck port data_in ;
+; spriteBarra:spriteBarra|sprite_y_reg[2,3]  ; Stuck at VCC due to stuck port data_in ;
+; spriteBarra:spriteBarra|sprite_y_reg[4,5]  ; Stuck at GND due to stuck port data_in ;
+; spriteBarra:spriteBarra|sprite_y_reg[6..8] ; Stuck at VCC due to stuck port data_in ;
+; spriteBarra:spriteBarra|sprite_y_reg[9]    ; Stuck at GND due to stuck port data_in ;
+; Calibrator:Calibrator|state~7              ; Lost fanout                            ;
+; Calibrator:Calibrator|state~8              ; Lost fanout                            ;
+; CameraRGB:camera|state~7                   ; Lost fanout                            ;
+; Total Number of Removed Registers = 23     ;                                        ;
++--------------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                    ;
++--------------------------+---------------------------+-----------------------------------------+
+; Register name            ; Reason for Removal        ; Registers Removed due to This Register  ;
++--------------------------+---------------------------+-----------------------------------------+
+; CameraRGB:camera|posy[9] ; Stuck at GND              ; spriteBarra:spriteBarra|sprite_y_reg[9] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[6] ; Stuck at VCC              ; spriteBarra:spriteBarra|sprite_y_reg[6] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[5] ; Stuck at GND              ; spriteBarra:spriteBarra|sprite_y_reg[5] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[4] ; Stuck at GND              ; spriteBarra:spriteBarra|sprite_y_reg[4] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[3] ; Stuck at VCC              ; spriteBarra:spriteBarra|sprite_y_reg[3] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[2] ; Stuck at VCC              ; spriteBarra:spriteBarra|sprite_y_reg[2] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[8] ; Stuck at VCC              ; spriteBarra:spriteBarra|sprite_y_reg[8] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[1] ; Stuck at GND              ; spriteBarra:spriteBarra|sprite_y_reg[1] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[0] ; Stuck at GND              ; spriteBarra:spriteBarra|sprite_y_reg[0] ;
+;                          ; due to stuck port data_in ;                                         ;
+; CameraRGB:camera|posy[7] ; Stuck at VCC              ; spriteBarra:spriteBarra|sprite_y_reg[7] ;
+;                          ; due to stuck port data_in ;                                         ;
++--------------------------+---------------------------+-----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -432,12 +487,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 499   ;
-; Number of registers using Synchronous Clear  ; 147   ;
-; Number of registers using Synchronous Load   ; 107   ;
+; Total registers                              ; 563   ;
+; Number of registers using Synchronous Clear  ; 159   ;
+; Number of registers using Synchronous Load   ; 148   ;
 ; Number of registers using Asynchronous Clear ; 149   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 322   ;
+; Number of registers using Clock Enable       ; 368   ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -470,18 +525,25 @@ Encoding Type:  One-Hot
 +-------------------------------+-----------------------------+------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                  ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output        ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------+
-; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Projeto|vga:vga_inst|x[9]        ;
-; 3:1                ; 9 bits    ; 18 LEs        ; 0 LEs                ; 18 LEs                 ; Yes        ; |Projeto|CameraRGB:camera|rgb[17] ;
-; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Projeto|vga:vga_inst|y[8]        ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Projeto|CameraRGB:camera|bit[1]  ;
-; 3:1                ; 10 bits   ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |Projeto|CameraRGB:camera|x       ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |Projeto|CameraRGB:camera|state   ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                      ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output            ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
+; 3:1                ; 14 bits   ; 28 LEs        ; 0 LEs                ; 28 LEs                 ; Yes        ; |Projeto|CameraRGB:camera|contar[3]   ;
+; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Projeto|vga:vga_inst|x[8]            ;
+; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Projeto|vga:vga_inst|y[1]            ;
+; 4:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |Projeto|CameraRGB:camera|rgb[2]      ;
+; 4:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; Yes        ; |Projeto|CameraRGB:camera|rgb[3]      ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Projeto|CameraRGB:camera|bit[1]      ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |Projeto|Calibrator:Calibrator|crt[1] ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |Projeto|Calibrator:Calibrator|crt[0] ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |Projeto|Calibrator:Calibrator|cbt[2] ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 4 LEs                ; 12 LEs                 ; Yes        ; |Projeto|Calibrator:Calibrator|cbt[0] ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |Projeto|vga:vga_inst|VGA_R[6]        ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |Projeto|CameraRGB:camera|state       ;
+; 14:1               ; 5 bits    ; 45 LEs        ; 20 LEs               ; 25 LEs                 ; No         ; |Projeto|Calibrator:Calibrator|state  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
 
 
 +-------------------------------------------------------+
@@ -761,6 +823,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++--------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Calibrator:Calibrator ;
++----------------+-------+-------------------------------------------+
+; Parameter Name ; Value ; Type                                      ;
++----------------+-------+-------------------------------------------+
+; read           ; 000   ; Unsigned Binary                           ;
+; crbupstate     ; 001   ; Unsigned Binary                           ;
+; crbdownstate   ; 010   ; Unsigned Binary                           ;
+; cbbupstate     ; 011   ; Unsigned Binary                           ;
+; cbbdownstate   ; 100   ; Unsigned Binary                           ;
++----------------+-------+-------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: spriteBarra:spriteBarra ;
++----------------+------------+----------------------------------------+
+; Parameter Name ; Value      ; Type                                   ;
++----------------+------------+----------------------------------------+
+; sprite_width   ; 0001000000 ; Unsigned Binary                        ;
+; sprite_height  ; 0000001000 ; Unsigned Binary                        ;
++----------------+------------+----------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +---------------------------------------------------------------------------------------------------------+
 ; Parameter Settings for Inferred Entity Instance: sld_signaltap:auto_signaltap_0                         ;
 +-------------------------------------------------+--------------------------------------+----------------+
@@ -908,26 +995,33 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-------------------------------------------+----------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "CameraRGB:camera"                                                                                                                          ;
-+------+-------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
-; Port ; Type  ; Severity ; Details                                                                                                                                     ;
-+------+-------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
-; cbc  ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (3 bits) it drives.  Extra input bit(s) "cbc[2..1]" will be connected to GND. ;
-; crc  ; Input ; Warning  ; Input port expression (1 bits) is smaller than the input port (3 bits) it drives.  Extra input bit(s) "crc[2..1]" will be connected to GND. ;
-+------+-------+----------+---------------------------------------------------------------------------------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "bintobcd:tobcdcbt"                                                                               ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port              ; Type   ; Severity ; Details                                                                             ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; valor_bin[19..8]  ; Input  ; Info     ; Stuck at GND                                                                        ;
+; valor_bcd[23..12] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
 
 
-+----------------------------------------------------------+
-; Port Connectivity Checks: "vga:vga_inst"                 ;
-+-------------+--------+----------+------------------------+
-; Port        ; Type   ; Severity ; Details                ;
-+-------------+--------+----------+------------------------+
-; red[4..0]   ; Input  ; Info     ; Stuck at GND           ;
-; green[4..0] ; Input  ; Info     ; Stuck at GND           ;
-; blue[4..0]  ; Input  ; Info     ; Stuck at GND           ;
-; line        ; Output ; Info     ; Explicitly unconnected ;
-+-------------+--------+----------+------------------------+
++-----------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "bintobcd:tobcdcrt"                                                                               ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port              ; Type   ; Severity ; Details                                                                             ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+; valor_bin[19..8]  ; Input  ; Info     ; Stuck at GND                                                                        ;
+; valor_bcd[23..12] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++-------------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++---------------------------------------------------+
+; Port Connectivity Checks: "vga:vga_inst"          ;
++------+--------+----------+------------------------+
+; Port ; Type   ; Severity ; Details                ;
++------+--------+----------+------------------------+
+; line ; Output ; Info     ; Explicitly unconnected ;
++------+--------+----------+------------------------+
 
 
 +-----------------------------------------------------+
@@ -953,39 +1047,39 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 78                          ;
-;     ENA               ; 20                          ;
-;     ENA SCLR          ; 19                          ;
-;     SCLR              ; 32                          ;
-;     plain             ; 7                           ;
+; arriav_ff             ; 142                         ;
+;     ENA               ; 21                          ;
+;     ENA SCLR          ; 30                          ;
+;     ENA SLD           ; 34                          ;
+;     SCLR              ; 33                          ;
+;     SLD               ; 7                           ;
+;     plain             ; 17                          ;
 ; arriav_io_obuf        ; 36                          ;
-; arriav_lcell_comb     ; 455                         ;
-;     arith             ; 138                         ;
-;         0 data inputs ; 1                           ;
-;         1 data inputs ; 101                         ;
-;         2 data inputs ; 35                          ;
+; arriav_lcell_comb     ; 587                         ;
+;     arith             ; 132                         ;
+;         1 data inputs ; 106                         ;
+;         2 data inputs ; 25                          ;
 ;         3 data inputs ; 1                           ;
-;     extend            ; 1                           ;
-;         7 data inputs ; 1                           ;
-;     normal            ; 304                         ;
+;     extend            ; 10                          ;
+;         7 data inputs ; 10                          ;
+;     normal            ; 433                         ;
 ;         0 data inputs ; 2                           ;
-;         1 data inputs ; 4                           ;
-;         2 data inputs ; 21                          ;
-;         3 data inputs ; 17                          ;
-;         4 data inputs ; 28                          ;
-;         5 data inputs ; 28                          ;
-;         6 data inputs ; 204                         ;
+;         1 data inputs ; 17                          ;
+;         2 data inputs ; 27                          ;
+;         3 data inputs ; 9                           ;
+;         4 data inputs ; 70                          ;
+;         5 data inputs ; 65                          ;
+;         6 data inputs ; 243                         ;
 ;     shared            ; 12                          ;
 ;         1 data inputs ; 2                           ;
 ;         2 data inputs ; 8                           ;
 ;         4 data inputs ; 2                           ;
-; arriav_mac            ; 4                           ;
-; boundary_port         ; 81                          ;
+; boundary_port         ; 123                         ;
 ; generic_pll           ; 1                           ;
 ; stratixv_ram_block    ; 342                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 6.70                        ;
-; Average LUT depth     ; 3.34                        ;
+; Average LUT depth     ; 3.89                        ;
 +-----------------------+-----------------------------+
 
 
@@ -994,7 +1088,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:00     ;
+; Top            ; 00:00:02     ;
 +----------------+--------------+
 
 
@@ -1055,11 +1149,11 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.1.0 Build 590 10/25/2017 SJ Lite Edition
-    Info: Processing started: Wed Jun  5 18:43:03 2024
+    Info: Processing started: Tue Jun 11 12:51:51 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off Projeto -c Projeto
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 12 of the 12 processors detected
-Warning (10463): Verilog HDL Declaration warning at CameraRGB.v(35): "bit" is SystemVerilog-2005 keyword File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 35
+Warning (10463): Verilog HDL Declaration warning at CameraRGB.v(40): "bit" is SystemVerilog-2005 keyword File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 40
 Info (12021): Found 1 design units, including 1 entities, in source file CameraRGB.v
     Info (12023): Found entity 1: CameraRGB File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file vga.v
@@ -1085,18 +1179,27 @@ Info (12021): Found 1 design units, including 1 entities, in source file SCCBGPT
     Info (12023): Found entity 1: SCCBGPT File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/SCCBGPT.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file Buffer8.v
     Info (12023): Found entity 1: Buffer8 File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Buffer8.v Line: 1
-Warning (10236): Verilog HDL Implicit Net warning at Projeto.v(31): created implicit net for "sio_d" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 31
-Warning (10236): Verilog HDL Implicit Net warning at Projeto.v(32): created implicit net for "sio_c" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 32
+Info (12021): Found 1 design units, including 1 entities, in source file output_files/Calibrator.v
+    Info (12023): Found entity 1: Calibrator File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/output_files/Calibrator.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file bintobcd.v
+    Info (12023): Found entity 1: bintobcd File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file bcd2decdisplay.v
+    Info (12023): Found entity 1: bcd2decdisplay File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bcd2decdisplay.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file spriteBarra.v
+    Info (12023): Found entity 1: spriteBarra File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v Line: 1
+Warning (10236): Verilog HDL Implicit Net warning at Projeto.v(35): created implicit net for "sio_d" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 35
+Warning (10236): Verilog HDL Implicit Net warning at Projeto.v(36): created implicit net for "sio_c" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 36
 Info (12127): Elaborating entity "Projeto" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at Projeto.v(31): object "sio_d" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 31
-Warning (10036): Verilog HDL or VHDL warning at Projeto.v(32): object "sio_c" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 32
-Warning (10036): Verilog HDL or VHDL warning at Projeto.v(20): object "start" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 20
-Warning (10036): Verilog HDL or VHDL warning at Projeto.v(21): object "resetsccb" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 21
-Warning (10230): Verilog HDL assignment warning at Projeto.v(17): truncated value with size 3 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 17
-Warning (10230): Verilog HDL assignment warning at Projeto.v(18): truncated value with size 3 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 18
-Warning (10230): Verilog HDL assignment warning at Projeto.v(51): truncated value with size 32 to match size of target (19) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 51
-Warning (10230): Verilog HDL assignment warning at Projeto.v(52): truncated value with size 32 to match size of target (19) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 52
-Info (12128): Elaborating entity "pll" for hierarchy "pll:pll_inst" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 46
+Warning (10036): Verilog HDL or VHDL warning at Projeto.v(35): object "sio_d" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 35
+Warning (10036): Verilog HDL or VHDL warning at Projeto.v(36): object "sio_c" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 36
+Warning (10036): Verilog HDL or VHDL warning at Projeto.v(24): object "start" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 24
+Warning (10036): Verilog HDL or VHDL warning at Projeto.v(25): object "resetsccb" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 25
+Warning (10230): Verilog HDL assignment warning at Projeto.v(55): truncated value with size 32 to match size of target (19) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 55
+Warning (10230): Verilog HDL assignment warning at Projeto.v(56): truncated value with size 32 to match size of target (19) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 56
+Warning (10230): Verilog HDL assignment warning at Projeto.v(170): truncated value with size 9 to match size of target (8) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 170
+Warning (10230): Verilog HDL assignment warning at Projeto.v(171): truncated value with size 9 to match size of target (8) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 171
+Warning (10230): Verilog HDL assignment warning at Projeto.v(172): truncated value with size 9 to match size of target (8) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 172
+Info (12128): Elaborating entity "pll" for hierarchy "pll:pll_inst" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 50
 Info (12128): Elaborating entity "pll_0002" for hierarchy "pll:pll_inst|pll_0002:pll_inst" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/pll.v Line: 20
 Info (12128): Elaborating entity "altera_pll" for hierarchy "pll:pll_inst|pll_0002:pll_inst|altera_pll:altera_pll_i" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/pll/pll_0002.v Line: 85
 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "wire_to_nowhere_64" into its bus
@@ -1162,26 +1265,37 @@ Info (12133): Instantiated megafunction "pll:pll_inst|pll_0002:pll_inst|altera_p
     Info (12134): Parameter "duty_cycle17" = "50"
     Info (12134): Parameter "pll_type" = "General"
     Info (12134): Parameter "pll_subtype" = "General"
-Info (12128): Elaborating entity "vga" for hierarchy "vga:vga_inst" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 76
+Info (12128): Elaborating entity "vga" for hierarchy "vga:vga_inst" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 80
 Warning (10230): Verilog HDL assignment warning at vga.v(39): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 39
 Warning (10230): Verilog HDL assignment warning at vga.v(42): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 42
 Warning (10230): Verilog HDL assignment warning at vga.v(50): truncated value with size 32 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 50
 Warning (10230): Verilog HDL assignment warning at vga.v(51): truncated value with size 32 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 51
 Warning (10230): Verilog HDL assignment warning at vga.v(60): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 60
 Warning (10230): Verilog HDL assignment warning at vga.v(61): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/vga.v Line: 61
-Info (12128): Elaborating entity "CameraRGB" for hierarchy "CameraRGB:camera" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 90
-Warning (10036): Verilog HDL or VHDL warning at CameraRGB.v(23): object "ipsilonzero" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 23
-Warning (10036): Verilog HDL or VHDL warning at CameraRGB.v(24): object "ipsilonum" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 24
-Warning (10036): Verilog HDL or VHDL warning at CameraRGB.v(34): object "half_clk" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 34
-Warning (10230): Verilog HDL assignment warning at CameraRGB.v(31): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 31
+Info (12128): Elaborating entity "CameraRGB" for hierarchy "CameraRGB:camera" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 99
+Warning (10036): Verilog HDL or VHDL warning at CameraRGB.v(29): object "ipsilonum" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 29
+Warning (10036): Verilog HDL or VHDL warning at CameraRGB.v(39): object "half_clk" assigned a value but never read File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 39
+Warning (10230): Verilog HDL assignment warning at CameraRGB.v(36): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 36
+Warning (10230): Verilog HDL assignment warning at CameraRGB.v(61): truncated value with size 32 to match size of target (14) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 61
 Warning (10230): Verilog HDL assignment warning at CameraRGB.v(71): truncated value with size 32 to match size of target (2) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 71
 Warning (10230): Verilog HDL assignment warning at CameraRGB.v(75): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 75
 Warning (10230): Verilog HDL assignment warning at CameraRGB.v(82): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 82
-Warning (10230): Verilog HDL assignment warning at CameraRGB.v(86): truncated value with size 32 to match size of target (18) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 86
-Warning (10230): Verilog HDL assignment warning at CameraRGB.v(87): truncated value with size 32 to match size of target (18) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 87
-Warning (10230): Verilog HDL assignment warning at CameraRGB.v(88): truncated value with size 32 to match size of target (18) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 88
-Warning (10230): Verilog HDL assignment warning at CameraRGB.v(98): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 98
-Info (12128): Elaborating entity "Buffer" for hierarchy "Buffer:buffer" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 100
+Warning (10230): Verilog HDL assignment warning at CameraRGB.v(105): truncated value with size 32 to match size of target (10) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/CameraRGB.v Line: 105
+Info (12128): Elaborating entity "Calibrator" for hierarchy "Calibrator:Calibrator" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 110
+Info (12128): Elaborating entity "Buffer" for hierarchy "Buffer:buffer" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 120
+Info (12128): Elaborating entity "bintobcd" for hierarchy "bintobcd:tobcdcrt" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 134
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(12): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 12
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(15): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 15
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(18): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 18
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(21): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 21
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(24): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 24
+Warning (10230): Verilog HDL assignment warning at bintobcd.v(27): truncated value with size 32 to match size of target (4) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/bintobcd.v Line: 27
+Info (12128): Elaborating entity "bcd2decdisplay" for hierarchy "bcd2decdisplay:bcd2decdisplay" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 149
+Info (12128): Elaborating entity "spriteBarra" for hierarchy "spriteBarra:spriteBarra" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 164
+Warning (10235): Verilog HDL Always Construct warning at spriteBarra.v(21): variable "sprite_y_reg" is read inside the Always Construct but isn't in the Always Construct's Event Control File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v Line: 21
+Warning (10235): Verilog HDL Always Construct warning at spriteBarra.v(22): variable "sprite_x_reg" is read inside the Always Construct but isn't in the Always Construct's Event Control File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v Line: 22
+Warning (10230): Verilog HDL assignment warning at spriteBarra.v(23): truncated value with size 32 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v Line: 23
+Warning (10230): Verilog HDL assignment warning at spriteBarra.v(24): truncated value with size 32 to match size of target (1) File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/spriteBarra.v Line: 24
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_g884.tdf
     Info (12023): Found entity 1: altsyncram_g884 File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/db/altsyncram_g884.tdf Line: 27
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_elc.tdf
@@ -1204,7 +1318,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
     Info (12023): Found entity 1: cmpr_99c File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/db/cmpr_99c.tdf Line: 22
 Info (12033): Analysis and Synthesis generated Signal Tap or debug node instance "auto_signaltap_0"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.06.05.18:43:12 Progress: Loading slde1ef6cd0/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.06.11.12:52:08 Progress: Loading slde1ef6cd0/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -1267,73 +1381,57 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/deco
     Info (12023): Found entity 1: decode_s2a File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/db/decode_s2a.tdf Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_khb.tdf
     Info (12023): Found entity 1: mux_khb File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/db/mux_khb.tdf Line: 22
-Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13034): The following nodes have both tri-state and non-tri-state drivers
-    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[8]" and its non-tri-state driver. File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
+    Warning (13035): Inserted always-enabled tri-state buffer between "GPIO_0[8]" and its non-tri-state driver. File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
 Warning (13039): The following bidirectional pins have no drivers
-    Warning (13040): bidirectional pin "GPIO_0[0]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[1]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[2]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[3]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[4]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[5]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[6]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[7]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[9]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[10]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[11]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[12]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[13]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[14]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[15]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[16]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[17]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[18]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[19]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[20]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[21]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[22]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[23]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[24]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[25]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[26]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[27]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[28]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[29]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[30]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[31]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[32]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[33]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[34]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
-    Warning (13040): bidirectional pin "GPIO_0[35]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
+    Warning (13040): bidirectional pin "GPIO_0[0]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[1]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[2]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[3]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[4]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[5]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[6]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[7]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[9]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[10]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[11]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[12]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[13]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[14]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[15]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[16]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[17]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[18]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[19]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[20]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[21]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[22]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[23]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[24]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[25]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[26]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[27]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[28]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[29]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[30]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[31]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[32]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[33]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[34]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
+    Warning (13040): bidirectional pin "GPIO_0[35]" has no driver File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
 Warning (13009): TRI or OPNDRN buffers permanently enabled
-    Warning (13010): Node "GPIO_0[8]~synth" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 6
+    Warning (13010): Node "GPIO_0[8]~synth" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "VGA_R[0]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
-    Warning (13410): Pin "VGA_R[1]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
-    Warning (13410): Pin "VGA_R[2]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
-    Warning (13410): Pin "VGA_R[3]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
-    Warning (13410): Pin "VGA_R[4]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
-    Warning (13410): Pin "VGA_G[0]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 11
-    Warning (13410): Pin "VGA_G[1]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 11
-    Warning (13410): Pin "VGA_G[2]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 11
-    Warning (13410): Pin "VGA_G[3]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 11
-    Warning (13410): Pin "VGA_G[4]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 11
-    Warning (13410): Pin "VGA_B[0]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
-    Warning (13410): Pin "VGA_B[1]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
-    Warning (13410): Pin "VGA_B[2]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
-    Warning (13410): Pin "VGA_B[3]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
-    Warning (13410): Pin "VGA_B[4]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 12
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 15
+    Warning (13410): Pin "HEX2[1]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 7
+    Warning (13410): Pin "HEX5[1]" is stuck at GND File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 10
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 21
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
-Info (17049): 1 registers lost all their fanouts during netlist optimizations.
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/output_files/Projeto.map.smsg
 Critical Warning (35025): Partially connected in-system debug instance "auto_signaltap_0" to 42 of its 43 required data inputs, trigger inputs, acquisition clocks, and dynamic pins.  There were 0 illegal, 0 inaccessible, and 1 missing sources or connections.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 17 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 11 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "KEY[2]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 3
-    Warning (15610): No output dependent on input pin "SW[0]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
+Warning (21074): Design contains 9 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[1]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
     Warning (15610): No output dependent on input pin "SW[2]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
     Warning (15610): No output dependent on input pin "SW[3]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
@@ -1343,19 +1441,18 @@ Warning (21074): Design contains 11 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[7]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
     Warning (15610): No output dependent on input pin "SW[8]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
     Warning (15610): No output dependent on input pin "SW[9]" File: /home/ec2021-ceb/ra232475/Documents/MC613/2024s1-mc613-projeto-hdmi/Projeto.v Line: 4
-Info (21057): Implemented 1495 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 1686 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 18 input pins
-    Info (21059): Implemented 31 output pins
+    Info (21059): Implemented 73 output pins
     Info (21060): Implemented 36 bidirectional pins
-    Info (21061): Implemented 1057 logic cells
+    Info (21061): Implemented 1210 logic cells
     Info (21064): Implemented 347 RAM segments
     Info (21065): Implemented 1 PLLs
-    Info (21062): Implemented 4 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 101 warnings
-    Info: Peak virtual memory: 1605 megabytes
-    Info: Processing ended: Wed Jun  5 18:43:18 2024
-    Info: Elapsed time: 00:00:15
-    Info: Total CPU time (on all processors): 00:00:32
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 93 warnings
+    Info: Peak virtual memory: 1604 megabytes
+    Info: Processing ended: Tue Jun 11 12:52:19 2024
+    Info: Elapsed time: 00:00:28
+    Info: Total CPU time (on all processors): 00:01:03
 
 
 +------------------------------------------+

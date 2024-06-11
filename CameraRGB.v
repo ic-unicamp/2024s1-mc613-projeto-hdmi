@@ -3,19 +3,24 @@ module CameraRGB(
 	input reset,
 	input cam_vsync,
 	input href,
-	input [2:0] crc,
-	input [2:0] cbc,
 	input [7:0] pixel,
+	input [7:0] cbt,
+	input [7:0] crt,
 	output [9:0] next_x,
 	output [9:0] next_y,
 	output reg wren,
-	output reg [17:0] rgb
+	output reg [8:0] rgb,
+	output reg [9:0] posx,
+	output reg [9:0] posy
 );
 
 reg [2:0] state;
 parameter [2:0] WAIT_VSYNC_DOWN = 1;
 parameter [2:0] WAIT_VSYNC_UP = 0;
 parameter [2:0] COUNT = 2;
+
+reg achei;
+reg [13:0] contar;
 
 reg [9:0] x = 0;
 reg [9:0] y = 0;
@@ -34,16 +39,6 @@ assign next_y = y;
 reg half_clk = 0;
 reg [1:0] bit = 0;
 
-//assign wren = (bit == 0 && href) ? 1 : 0;
-
-//always @(posedge pclk) begin
-//	if(reset) begin
-//		half_clk = 0;
-//	end else  	begin
-//		half_clk = !half_clk;
-//	end
-//end
-
 always @(posedge pclk) begin
 	if (reset) begin
 		state = 0;
@@ -52,6 +47,8 @@ always @(posedge pclk) begin
 		bit = 0;
 		wren = 0;
 		rgb = 0;
+		achei = 0;
+		contar = 0;
 	end else begin
 		case(state)
 			WAIT_VSYNC_UP: begin
@@ -61,6 +58,9 @@ always @(posedge pclk) begin
 				x = 0;
 				y = 0;
 				wren = 0;
+				contar = contar + 1;
+				if (contar == 0) achei = 0;
+				//achei = 0;
 				if(cam_vsync == 0) begin
 					state = COUNT;
 					bit = 0;
@@ -83,13 +83,20 @@ always @(posedge pclk) begin
 					end
 					if(bit == 0) begin
 						ipsilonum = pixel;
-						red = (y * 1024) + (1435*(cr));
-						green = (y * 1024) - (352*(cb)) - (731*(cr));
-						blue = (y * 1024) + (1814*(cb));
-						rgb = {red[17:15], green[17:15], blue[17:15], red[17:15], green[17:15], blue[17:15]};
-						//if(cr > 150 && cb > 150 && ipsilonzero > 100) rgb = 18'b000111000000111000;
-						//else rgb = {cr[7:5], cr[7:5], cr[7:5], cr[7:5], cr[7:5], cr[7:5]};
-						//rgb = {1'b0, cr, 1'b0, cr};
+						//red = (y * 1024) + (1435*(cr));
+						//green = (y * 1024) - (352*(cb)) - (731*(cr));
+						//blue = (y * 1024) + (1814*(cb));
+						//rgb = {red[17:15], green[17:15], blue[17:15], red[17:15], green[17:15], blue[17:15]};
+						if(cr > crt && cb > cbt && ipsilonzero > 100) begin 
+							if(achei == 0) begin
+								achei = 1;
+								rgb = 9'b111000000;
+								posx = x;
+								posy = 10'd460;
+							end else rgb = 9'b000111000;
+						end
+						else rgb = {ipsilonzero[7:5], ipsilonzero[7:5], ipsilonzero[7:5]};
+						//rgb = {ipsilonzero[7:5], ipsilonzero[7:5], ipsilonzero[7:5]};
 						wren = 1;
 					end
 				end

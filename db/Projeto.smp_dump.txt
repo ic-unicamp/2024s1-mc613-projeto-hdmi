@@ -1,4 +1,12 @@
 
+State Machine - |Projeto|Calibrator:Calibrator|state
+Name state.cbbupstate state.crbdownstate state.crbupstate state.000 state.cbbdownstate 
+state.000 0 0 0 0 0 
+state.crbupstate 0 0 1 1 0 
+state.crbdownstate 0 1 0 1 0 
+state.cbbupstate 1 0 0 1 0 
+state.cbbdownstate 0 0 0 1 1 
+
 State Machine - |Projeto|CameraRGB:camera|state
 Name state.000 state.COUNT state.WAIT_VSYNC_DOWN 
 state.000 0 0 0 
