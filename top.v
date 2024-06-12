@@ -15,21 +15,44 @@ module top(
 	output [6:0] HEX2,
 	inout [35:0] GPIO_0
 );
-
-wire [9:0] next_x_vga;
-wire [9:0] next_y_vga;
-wire reset = SW[0];
-wire left_button = KEY[1];
-wire right_button = KEY[0];
+ 
+ 
+// Botões
+wire reset = !KEY[1];
+wire reset_vga = !KEY[0];
 wire start = !KEY[3];
-
+ 
 // Variáveis para o clock
 reg [31:0] counter = 0;
 reg [31:0] divider = 750000;
 reg SLOW_CLK;
 wire [9:0] player_x;
 wire [9:0] player_y;
-
+ 
+// Variaveis para a camera e o vga
+wire [9:0] next_x_vga;
+wire [9:0] next_y_vga;
+wire pclk;
+assign pclk = GPIO_0[9];
+wire [7:0] pixel;
+assign pixel = GPIO_0[7:0];
+assign GPIO_0[8] = CLOCK_24;
+wire href;
+wire cam_vsync;
+assign href = GPIO_0[10];
+assign cam_vsync = GPIO_0[11];
+wire [9:0] next_x_cam;
+wire [9:0] next_y_cam;
+wire [8:0] vga_out;
+wire [8:0] rgb;
+wire [18:0] next_cam;
+wire [18:0] next_vga;
+assign next_cam = next_x_cam + (640 * next_y_cam);
+assign next_vga = next_x_vga + (640 * next_y_vga);
+reg [7:0] red;
+reg [7:0] green;
+reg [7:0] blue;
+ 
 // Divisor de frequência para gerar o clock da VGA e o clock da velocidade do jogo
 always @(posedge CLOCK_50) begin
     counter = counter + 1;
@@ -38,13 +61,8 @@ always @(posedge CLOCK_50) begin
       counter = 0;
     end
 end
-
-
-wire [18:0] next_cam;
-wire [18:0] next_vga;
-assign next_cam = next_x_cam + (640 * next_y_cam);
-assign next_vga = next_x_vga + (640 * next_y_vga);
-
+ 
+// Instanciando módulos relacionados a câmera e vga 
 buffer buffer(
 	.wrclk(pclk),
 	.rdclk(VGA_CLK),
@@ -54,9 +72,9 @@ buffer buffer(
 	.rdaddress(next_vga),
 	.read_data(vga_out)
 );
-
+ 
 vga vga(
-    .reset(reset),
+    .reset(reset_vga),
     .CLOCK_50(CLOCK_50),
     .red(red),
     .green(green),
@@ -72,7 +90,29 @@ vga vga(
     .next_x(next_x_vga),
     .next_y(next_y_vga)
 );
-
+ 
+cameraRGB camera(
+	.pclk(pclk),
+	.reset(reset),
+	.href(href),
+	.wren(wren),
+	.pixel(pixel),
+	.cam_vsync(cam_vsync),
+	.next_x(next_x_cam),
+	.next_y(next_y_cam),
+	.rgb(rgb),
+	.posx(player_x),
+	.posy(player_y)
+);
+ 
+pll pll_inst (
+	.refclk   (CLOCK_50),   // refclk.clk
+	.rst      (reset),      // reset.reset
+	.outclk_0 (CLOCK_24), 	// outclk0.clk
+	.locked   ()    		// locked.export
+);
+ 
+// Instanciando Sprites
  spriteObstaculo spriteObstaculo0(
 	.clk(CLOCK_50),
 	.reset(reset),
@@ -132,8 +172,8 @@ vga vga(
 	.color(obstacle4_color),
 	.drawing(obstacle4_drawing)
  );
-
-
+ 
+ 
  spriteNave spriteNave(
 	.clk(CLOCK_50),
 	.reset(reset),
@@ -157,66 +197,18 @@ vga vga(
 	.color(game_over_color),
 	.drawing(game_over_drawing)
  );
-
-//controllerPlayer controllerPlayer(
-//	.CLOCK_50(CLOCK_50),
-//	.reset(reset),
-//	.left_button(left_button),
-//	.right_button(right_button),
-//	.player_x(player_x),
-//	.player_y(player_y)
-//);
-
-wire pclk;
-assign pclk = GPIO_0[9];
-wire [7:0] pixel;
-assign pixel = GPIO_0[7:0];
-assign GPIO_0[8] = CLOCK_24;
-wire href;
-wire cam_vsync;
-assign href = GPIO_0[10];
-assign cam_vsync = GPIO_0[11];
-wire [9:0] next_x_cam;
-wire [9:0] next_y_cam;
-wire [8:0] vga_out;
-wire [8:0] rgb;
-
-cameraRGB camera(
-	.pclk(pclk),
-	.reset(reset),
-	.href(href),
-	.wren(wren),
-	.pixel(pixel),
-	.cam_vsync(cam_vsync),
-	.next_x(next_x_cam),
-	.next_y(next_y_cam),
-	.rgb(rgb),
-	.posx(player_x),
-	.posy(player_y)
-);
-
-pll pll_inst (
-	.refclk   (CLOCK_50),   //  refclk.clk
-	.rst      (reset),      //   reset.reset
-	.outclk_0 (CLOCK_24), // outclk0.clk
-	.locked   ()    //  locked.export
-);
-
-reg [7:0] red;
-reg [7:0] green;
-reg [7:0] blue;
-
-// Player & Obstacle Parameters
+ 
+// Variaveis player e obstaculos
 parameter [9:0] player_size_x = 32;
 parameter [9:0] player_size_y = 16;
 parameter [9:0] obstacle_size_x = 32;
 parameter [9:0] obstacle_size_y = 32;
-
+ 
 reg [2:0] obstacle_step_x;
 reg [2:0] obstacle_step_y;
 reg [1:0] obstacle_trigger;
 reg [1:0] game_over;
-
+ 
 wire [9:0] obstacle0_x;
 wire [9:0] obstacle1_x;
 wire [9:0] obstacle2_x;
@@ -227,7 +219,7 @@ wire [9:0] obstacle1_y;
 wire [9:0] obstacle2_y;
 wire [9:0] obstacle3_y;
 wire [9:0] obstacle4_y;
-
+ 
 reg [9:0] obstacle0_start_x;
 reg [9:0] obstacle1_start_x;
 reg [9:0] obstacle2_start_x;
@@ -238,7 +230,8 @@ reg [9:0] obstacle1_start_y;
 reg [9:0] obstacle2_start_y;
 reg [9:0] obstacle3_start_y;
 reg [9:0] obstacle4_start_y;
-
+ 
+// Instanciando controller dos obstaculos
 controllerObstacle controllerObstacle0(
 	.clk(SLOW_CLK),
 	.reset(reset),
@@ -248,7 +241,7 @@ controllerObstacle controllerObstacle0(
 	.obstacle_x(obstacle0_x),
 	.obstacle_y(obstacle0_y)
 );
-
+ 
 controllerObstacle controllerObstacle1(
 	.clk(SLOW_CLK),
 	.reset(reset),
@@ -258,7 +251,7 @@ controllerObstacle controllerObstacle1(
 	.obstacle_x(obstacle1_x),
 	.obstacle_y(obstacle1_y)
 );
-
+ 
 controllerObstacle controllerObstacle2(
 	.clk(SLOW_CLK),
 	.reset(reset),
@@ -268,7 +261,7 @@ controllerObstacle controllerObstacle2(
 	.obstacle_x(obstacle2_x),
 	.obstacle_y(obstacle2_y)
 );
-
+ 
 controllerObstacle controllerObstacle3(
 	.clk(SLOW_CLK),
 	.reset(reset),
@@ -278,7 +271,7 @@ controllerObstacle controllerObstacle3(
 	.obstacle_x(obstacle3_x),
 	.obstacle_y(obstacle3_y)
 );
-
+ 
 controllerObstacle controllerObstacle4(
 	.clk(SLOW_CLK),
 	.reset(reset),
@@ -288,24 +281,31 @@ controllerObstacle controllerObstacle4(
 	.obstacle_x(obstacle4_x),
 	.obstacle_y(obstacle4_y)
 );
-
+ 
+// Variaveis display
 wire[11:0] valor_bcd;
-
+ 
+// Instanciando modulo display
 bin2bcd bin2bcd(
 	.valor_bin(score),
 	.valor_bcd(valor_bcd)
 );
-
+ 
 bcd2display bcd2display(
 	.valor(valor_bcd),
 	.digito0(HEX0),
 	.digito1(HEX1),
 	.digito2(HEX2)
 );
-
+ 
+// Variaveis de controle do jogo
 reg collision;
 wire gameon;
-
+reg [9:0] max_score = 0;
+reg [9:0] score = 0;
+reg [6:0] score_counter;
+ 
+// Instanciando modulo de controle do jogo
 gameController gameController(
 	.CLOCK_50(CLOCK_50),
 	.reset(reset),
@@ -313,13 +313,11 @@ gameController gameController(
 	.collision(collision),
 	.gameon(gameon)
 );
-
-reg [9:0] max_score = 0;
-reg [9:0] score = 0;
-
+ 
+// Variaveis que controlam o "spawn" dos obstaculos
 reg [6:0] spawn_position_index = 0;
 reg [9:0] spawn_position_list [0:99];
-
+ 
 initial begin
 	spawn_position_list[0] = 10'd116;
 	spawn_position_list[1] = 10'd510;
@@ -422,45 +420,52 @@ initial begin
 	spawn_position_list[98] = 10'd145;
 	spawn_position_list[99] = 10'd551;
 end
-
-
+ 
+ 
+// Controle de posicao e colisao dos obstaculos
 always @(posedge SLOW_CLK) begin
-
+ 
 	if (reset || !gameon) begin
-
+ 
 		if (reset) game_over = 0;
-		score = 0;
+		if (reset) score = 0;
 		max_score = 0;
 		divider = 750000;
-		
+		score_counter = 0;
+ 
 		obstacle0_start_y = 10'd0;
 		obstacle1_start_y = 10'd64;
 		obstacle2_start_y = 10'd128;
 		obstacle3_start_y = 10'd192;
 		obstacle4_start_y = 10'd256;
-		
+ 
 		obstacle0_start_x = spawn_position_list[0];
 		obstacle1_start_x = spawn_position_list[1];
 		obstacle2_start_x = spawn_position_list[2];
 		obstacle3_start_x = spawn_position_list[3];
 		obstacle4_start_x = spawn_position_list[4];
-		
+ 
 	end else begin
  
+		if(score_counter == 33) begin
+			score = score + 1;
+			score_counter = 0;
+		end else score_counter = score_counter + 1;
+ 
 		spawn_position_index = spawn_position_index + 1;
-
+ 
 		if (spawn_position_index >= 95) begin
 			spawn_position_index = spawn_position_index - 95;
 		end
-
+ 
 		obstacle0_start_x = spawn_position_list[spawn_position_index + 1];
 		obstacle1_start_x = spawn_position_list[spawn_position_index + 2];
 		obstacle2_start_x = spawn_position_list[spawn_position_index + 3];
 		obstacle3_start_x = spawn_position_list[spawn_position_index + 4];
 		obstacle4_start_x = spawn_position_list[spawn_position_index + 5];
-		
+ 
 		collision = 0;
-		
+ 
 		// COLLISIONS
 		if (( ((player_x >= obstacle0_x) && (player_x <= obstacle0_x + obstacle_size_x)) ||
 		((player_x + player_size_x >= obstacle0_x) && (player_x + player_size_x <= obstacle0_x + obstacle_size_x)) ) &&
@@ -492,15 +497,16 @@ always @(posedge SLOW_CLK) begin
 			collision = 1;
 			game_over = 1;
 		end
-
+ 
 	// Acelerar jogo até um limite
 	divider = divider - 100;
 	if (divider < 300000) divider = 300000;
-
+ 
 	end
  
 end
-
+ 
+// Controle do desenho dos objetos na tela
 always @ (posedge CLOCK_50) begin
 	red = (!game_over && ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
 	(obstacle2_drawing && obstacle2_color) || (obstacle3_drawing && obstacle3_color) ||
@@ -515,5 +521,5 @@ always @ (posedge CLOCK_50) begin
 	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ||
 	(game_over && game_over_drawing && game_over_color)) ? 255 : {vga_out[2:0], 5'b00000};
 end
-
+ 
 endmodule

@@ -1,3 +1,5 @@
+// FOI USADO PARA TESTAR COM CONTROLE COM BOTÕES DA PLACA
+
 module controllerPlayer(
   input CLOCK_50,
   input reset,
