@@ -12,14 +12,16 @@ module top(
 	output VGA_SYNC_N,
 	output [6:0] HEX0,
 	output [6:0] HEX1,
-	output [6:0] HEX2
+	output [6:0] HEX2,
+	inout [35:0] GPIO_0
 );
 
-wire [9:0] next_x;
-wire [9:0] next_y;
+wire [9:0] next_x_vga;
+wire [9:0] next_y_vga;
 wire reset = SW[0];
 wire left_button = KEY[1];
 wire right_button = KEY[0];
+wire start = !KEY[3];
 
 // Variáveis para o clock
 reg [31:0] counter = 0;
@@ -37,6 +39,22 @@ always @(posedge CLOCK_50) begin
     end
 end
 
+
+wire [18:0] next_cam;
+wire [18:0] next_vga;
+assign next_cam = next_x_cam + (640 * next_y_cam);
+assign next_vga = next_x_vga + (640 * next_y_vga);
+
+buffer buffer(
+	.wrclk(pclk),
+	.rdclk(VGA_CLK),
+	.wraddress(next_cam),
+	.write_data(rgb),
+	.wren(wren),
+	.rdaddress(next_vga),
+	.read_data(vga_out)
+);
+
 vga vga(
     .reset(reset),
     .CLOCK_50(CLOCK_50),
@@ -51,15 +69,15 @@ vga vga(
     .VGA_B(VGA_B),
     .VGA_BLANK_N(VGA_BLANK_N),
     .VGA_SYNC_N(VGA_SYNC_N),
-    .next_x(next_x),
-    .next_y(next_y)
+    .next_x(next_x_vga),
+    .next_y(next_y_vga)
 );
 
- spriteObjeto3 spriteObstaculo0(
+ spriteObstaculo spriteObstaculo0(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(obstacle0_x),
 	.sprite_y(obstacle0_y),
@@ -67,11 +85,11 @@ vga vga(
 	.drawing(obstacle0_drawing)
  );
  
- spriteObjeto3 spriteObstaculo1(
+ spriteObstaculo spriteObstaculo1(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(obstacle1_x),
 	.sprite_y(obstacle1_y),
@@ -79,11 +97,11 @@ vga vga(
 	.drawing(obstacle1_drawing)
  );
  
- spriteObjeto3 spriteObstaculo2(
+ spriteObstaculo spriteObstaculo2(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(obstacle2_x),
 	.sprite_y(obstacle2_y),
@@ -91,11 +109,11 @@ vga vga(
 	.drawing(obstacle2_drawing)
  );
  
-  spriteObjeto3 spriteObstaculo3(
+ spriteObstaculo spriteObstaculo3(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(obstacle3_x),
 	.sprite_y(obstacle3_y),
@@ -103,38 +121,85 @@ vga vga(
 	.drawing(obstacle3_drawing)
  );
  
-  spriteObjeto3 spriteObstaculo4(
+ spriteObstaculo spriteObstaculo4(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(obstacle4_x),
 	.sprite_y(obstacle4_y),
 	.color(obstacle4_color),
 	.drawing(obstacle4_drawing)
  );
- 
+
 
  spriteNave spriteNave(
 	.clk(CLOCK_50),
 	.reset(reset),
-	.x(next_x),
-	.y(next_y),
+	.x(next_x_vga),
+	.y(next_y_vga),
 	.vsync(VGA_VS),
 	.sprite_x(player_x),
 	.sprite_y(player_y),
 	.color(player_color),
 	.drawing(player_drawing)
  );
-
-controllerPlayer controllerPlayer(
-	.CLOCK_50(CLOCK_50),
+ 
+ spriteGameOver spriteGameOver(
+	.clk(CLOCK_50),
 	.reset(reset),
-	.left_button(left_button),
-	.right_button(right_button),
-	.player_x(player_x),
-	.player_y(player_y)
+	.x(next_x_vga),
+	.y(next_y_vga),
+	.vsync(VGA_VS),
+	.sprite_x(192),
+	.sprite_y(232),
+	.color(game_over_color),
+	.drawing(game_over_drawing)
+ );
+
+//controllerPlayer controllerPlayer(
+//	.CLOCK_50(CLOCK_50),
+//	.reset(reset),
+//	.left_button(left_button),
+//	.right_button(right_button),
+//	.player_x(player_x),
+//	.player_y(player_y)
+//);
+
+wire pclk;
+assign pclk = GPIO_0[9];
+wire [7:0] pixel;
+assign pixel = GPIO_0[7:0];
+assign GPIO_0[8] = CLOCK_24;
+wire href;
+wire cam_vsync;
+assign href = GPIO_0[10];
+assign cam_vsync = GPIO_0[11];
+wire [9:0] next_x_cam;
+wire [9:0] next_y_cam;
+wire [8:0] vga_out;
+wire [8:0] rgb;
+
+cameraRGB camera(
+	.pclk(pclk),
+	.reset(reset),
+	.href(href),
+	.wren(wren),
+	.pixel(pixel),
+	.cam_vsync(cam_vsync),
+	.next_x(next_x_cam),
+	.next_y(next_y_cam),
+	.rgb(rgb),
+	.posx(player_x),
+	.posy(player_y)
+);
+
+pll pll_inst (
+	.refclk   (CLOCK_50),   //  refclk.clk
+	.rst      (reset),      //   reset.reset
+	.outclk_0 (CLOCK_24), // outclk0.clk
+	.locked   ()    //  locked.export
 );
 
 reg [7:0] red;
@@ -177,7 +242,7 @@ reg [9:0] obstacle4_start_y;
 controllerObstacle controllerObstacle0(
 	.clk(SLOW_CLK),
 	.reset(reset),
-	.obstacle_trigger(1),
+	.obstacle_trigger(gameon),
 	.obstacle_start_x(obstacle0_start_x),
 	.obstacle_start_y(obstacle0_start_y),
 	.obstacle_x(obstacle0_x),
@@ -187,7 +252,7 @@ controllerObstacle controllerObstacle0(
 controllerObstacle controllerObstacle1(
 	.clk(SLOW_CLK),
 	.reset(reset),
-	.obstacle_trigger(1),
+	.obstacle_trigger(gameon),
 	.obstacle_start_x(obstacle1_start_x),
 	.obstacle_start_y(obstacle1_start_y),
 	.obstacle_x(obstacle1_x),
@@ -197,7 +262,7 @@ controllerObstacle controllerObstacle1(
 controllerObstacle controllerObstacle2(
 	.clk(SLOW_CLK),
 	.reset(reset),
-	.obstacle_trigger(1),
+	.obstacle_trigger(gameon),
 	.obstacle_start_x(obstacle2_start_x),
 	.obstacle_start_y(obstacle2_start_y),
 	.obstacle_x(obstacle2_x),
@@ -207,7 +272,7 @@ controllerObstacle controllerObstacle2(
 controllerObstacle controllerObstacle3(
 	.clk(SLOW_CLK),
 	.reset(reset),
-	.obstacle_trigger(1),
+	.obstacle_trigger(gameon),
 	.obstacle_start_x(obstacle3_start_x),
 	.obstacle_start_y(obstacle3_start_y),
 	.obstacle_x(obstacle3_x),
@@ -217,7 +282,7 @@ controllerObstacle controllerObstacle3(
 controllerObstacle controllerObstacle4(
 	.clk(SLOW_CLK),
 	.reset(reset),
-	.obstacle_trigger(1),
+	.obstacle_trigger(gameon),
 	.obstacle_start_x(obstacle4_start_x),
 	.obstacle_start_y(obstacle4_start_y),
 	.obstacle_x(obstacle4_x),
@@ -236,6 +301,17 @@ bcd2display bcd2display(
 	.digito0(HEX0),
 	.digito1(HEX1),
 	.digito2(HEX2)
+);
+
+reg collision;
+wire gameon;
+
+gameController gameController(
+	.CLOCK_50(CLOCK_50),
+	.reset(reset),
+	.start(start),
+	.collision(collision),
+	.gameon(gameon)
 );
 
 reg [9:0] max_score = 0;
@@ -350,19 +426,25 @@ end
 
 always @(posedge SLOW_CLK) begin
 
-	if (reset) begin
+	if (reset || !gameon) begin
 
-		game_over = 0;
+		if (reset) game_over = 0;
 		score = 0;
 		max_score = 0;
 		divider = 750000;
-
+		
 		obstacle0_start_y = 10'd0;
 		obstacle1_start_y = 10'd64;
 		obstacle2_start_y = 10'd128;
 		obstacle3_start_y = 10'd192;
 		obstacle4_start_y = 10'd256;
-
+		
+		obstacle0_start_x = spawn_position_list[0];
+		obstacle1_start_x = spawn_position_list[1];
+		obstacle2_start_x = spawn_position_list[2];
+		obstacle3_start_x = spawn_position_list[3];
+		obstacle4_start_x = spawn_position_list[4];
+		
 	end else begin
  
 		spawn_position_index = spawn_position_index + 1;
@@ -376,53 +458,62 @@ always @(posedge SLOW_CLK) begin
 		obstacle2_start_x = spawn_position_list[spawn_position_index + 3];
 		obstacle3_start_x = spawn_position_list[spawn_position_index + 4];
 		obstacle4_start_x = spawn_position_list[spawn_position_index + 5];
-
+		
+		collision = 0;
+		
 		// COLLISIONS
-		// Deveria fazer um game over, mas estou só somando o score pra observar
-		if (((player_x >= obstacle0_x) && (player_x <= obstacle0_x + obstacle_size_x) ||
-		(player_x + player_size_x >= obstacle0_x) && (player_x + player_size_x <= obstacle0_x + obstacle_size_x)) &&
+		if (( ((player_x >= obstacle0_x) && (player_x <= obstacle0_x + obstacle_size_x)) ||
+		((player_x + player_size_x >= obstacle0_x) && (player_x + player_size_x <= obstacle0_x + obstacle_size_x)) ) &&
 		(player_y >= obstacle0_y) && (player_y <= obstacle0_y + obstacle_size_y)) begin
-			score = score + 1;
+			collision = 1;
+			game_over = 1;
 		end
 		if (((player_x >= obstacle1_x) && (player_x <= obstacle1_x + obstacle_size_x) ||
 		(player_x + player_size_x >= obstacle1_x) && (player_x + player_size_x <= obstacle1_x + obstacle_size_x)) &&
 		(player_y >= obstacle1_y) && (player_y <= obstacle1_y + obstacle_size_y)) begin
-			score = score + 1;
+			collision = 1;
+			game_over = 1;
 		end
 		if (((player_x >= obstacle2_x) && (player_x <= obstacle2_x + obstacle_size_x) ||
 		(player_x + player_size_x >= obstacle2_x) && (player_x + player_size_x <= obstacle2_x + obstacle_size_x)) &&
 		(player_y >= obstacle2_y) && (player_y <= obstacle2_y + obstacle_size_y)) begin
-			score = score + 1;
+			collision = 1;
+			game_over = 1;
 		end
 		if (((player_x >= obstacle3_x) && (player_x <= obstacle3_x + obstacle_size_x) ||
 		(player_x + player_size_x >= obstacle3_x) && (player_x + player_size_x <= obstacle3_x + obstacle_size_x)) &&
 		(player_y >= obstacle3_y) && (player_y <= obstacle3_y + obstacle_size_y)) begin
-			score = score + 1;
+			collision = 1;
+			game_over = 1;
 		end
 		if (((player_x >= obstacle4_x) && (player_x <= obstacle4_x + obstacle_size_x) ||
 		(player_x + player_size_x >= obstacle4_x) && (player_x + player_size_x <= obstacle4_x + obstacle_size_x)) &&
 		(player_y >= obstacle4_y) && (player_y <= obstacle4_y + obstacle_size_y)) begin
-			score = score + 1;
+			collision = 1;
+			game_over = 1;
 		end
 
 	// Acelerar jogo até um limite
 	divider = divider - 100;
-	if (divider < 250000) divider = 250000;
+	if (divider < 300000) divider = 300000;
 
 	end
  
 end
 
 always @ (posedge CLOCK_50) begin
-	red = ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
+	red = (!game_over && ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
 	(obstacle2_drawing && obstacle2_color) || (obstacle3_drawing && obstacle3_color) ||
-	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ? 255 : 0;
-	blue = ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
+	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ||
+	(game_over && game_over_drawing && game_over_color)) ? 255 : {vga_out[8:6], 5'b00000};
+	green = (!game_over && ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
 	(obstacle2_drawing && obstacle2_color) || (obstacle3_drawing && obstacle3_color) ||
-	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ? 255 : 0;
-	green = ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
+	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ||
+	(game_over && game_over_drawing && game_over_color)) ? 255 : {vga_out[5:3], 5'b00000};
+	blue = (!game_over && ((obstacle0_drawing && obstacle0_color) || (obstacle1_drawing && obstacle1_color) ||
 	(obstacle2_drawing && obstacle2_color) || (obstacle3_drawing && obstacle3_color) ||
-	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ? 255 : 0;
+	(obstacle4_drawing && obstacle4_color) || (player_drawing && player_color)) ||
+	(game_over && game_over_drawing && game_over_color)) ? 255 : {vga_out[2:0], 5'b00000};
 end
 
 endmodule

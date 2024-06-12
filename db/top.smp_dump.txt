@@ -1,0 +1,12 @@
+
+State Machine - |top|gameController:gameController|state
+Name state.00 state.over state.game 
+state.00 0 0 0 
+state.game 1 0 1 
+state.over 1 1 0 
+
+State Machine - |top|cameraRGB:camera|state
+Name state.000 state.COUNT state.WAIT_VSYNC_DOWN 
+state.000 0 0 0 
+state.WAIT_VSYNC_DOWN 1 0 1 
+state.COUNT 1 1 0 
